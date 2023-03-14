@@ -1,0 +1,56 @@
+\documentclass[11pt,twocolumn]{article}
+\usepackage{url} % Allow URLs.
+\usepackage{graphicx} % Allow inclusion of graphics.
+\usepackage[sort&compress]{natbib} % Better bibliography handling.
+\usepackage{geometry} % Sets page size and margins
+\usepackage{authblk} % Put authors names in a block.
+\usepackage{amsmath} % Allow fancy math stuff
+\usepackage{amsfonts}
+\usepackage{tabularx,ragged2e,booktabs} % Stuff for tables.
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{authblk}
+\usepackage{xcolor} % Allow colors.
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{float}
+\usepackage[ruled,vlined]{algorithm2e}
+
+% Use the short form for ISMB submission, long for biorxiv.
+\newcommand{\shorten}[1]{#1}
+\newcommand{\fixme}[2]{\color{red}{\bf #2 ---#1} \color{black}}
+% Reduce the size of the affiliations
+\renewcommand\Affilfont{\fontsize{9}{10.8}\itshape}
+
+\title{GNN Interpretability Using Bayesian Inference}
+
+\author[1,2]{Shalin Patel} 
+\author[2,3]{Ritambhara Singh}
+
+\affil[1]{Division of Applied Mathematics, Brown University}
+\affil[2]{Center for Computational Molecular Biology, Brown University}
+\affil[3]{Department of Computer Science, Brown University}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\input{1_intro}
+\input{2_related}
+\input{3_method}
+\input{4_exp}
+\input{5_results}
+\input{6_discuss}
+
+\bibliographystyle{unsrt}
+\small{\bibliography{refs}}
+\end{document}
