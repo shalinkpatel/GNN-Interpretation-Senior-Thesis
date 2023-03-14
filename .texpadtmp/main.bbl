@@ -1,3 +1,9 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{bingham_pyro_2018}
+Eli Bingham, Jonathan~P. Chen, Martin Jankowiak, Fritz Obermeyer, Neeraj
+  Pradhan, Theofanis Karaletsos, Rohit Singh, Paul Szerlip, Paul Horsfall, and
+  Noah~D. Goodman.
+\newblock Pyro: Deep universal probabilistic programming.
 
 \end{thebibliography}

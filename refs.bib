@@ -1,77 +1,176 @@
-@article{singh2016deepchrome,
-  title={DeepChrome: deep-learning for predicting gene expression from histone modifications},
-  author={Singh, Ritambhara and Lanchantin, Jack and Robins, Gabriel and Qi, Yanjun},
-  journal={Bioinformatics},
-  volume={32},
-  number={17},
-  pages={i639--i648},
-  year={2016},
-  publisher={Oxford University Press}
+
+@misc{ying_gnnexplainer_2019,
+	title = {{GNNExplainer}: Generating Explanations for Graph Neural Networks},
+	url = {http://arxiv.org/abs/1903.03894},
+	doi = {10.48550/arXiv.1903.03894},
+	shorttitle = {{GNNExplainer}},
+	abstract = {Graph Neural Networks ({GNNs}) are a powerful tool for machine learning on graphs.{GNNs} combine node feature information with the graph structure by recursively passing neural messages along edges of the input graph. However, incorporating both graph structure and feature information leads to complex models, and explaining predictions made by {GNNs} remains unsolved. Here we propose {GNNExplainer}, the first general, model-agnostic approach for providing interpretable explanations for predictions of any {GNN}-based model on any graph-based machine learning task. Given an instance, {GNNExplainer} identifies a compact subgraph structure and a small subset of node features that have a crucial role in {GNN}'s prediction. Further, {GNNExplainer} can generate consistent and concise explanations for an entire class of instances. We formulate {GNNExplainer} as an optimization task that maximizes the mutual information between a {GNN}'s prediction and distribution of possible subgraph structures. Experiments on synthetic and real-world graphs show that our approach can identify important graph structures as well as node features, and outperforms baselines by 17.1\% on average. {GNNExplainer} provides a variety of benefits, from the ability to visualize semantically relevant structures to interpretability, to giving insights into errors of faulty {GNNs}.},
+	number = {{arXiv}:1903.03894},
+	publisher = {{arXiv}},
+	author = {Ying, Rex and Bourgeois, Dylan and You, Jiaxuan and Zitnik, Marinka and Leskovec, Jure},
+	urldate = {2023-03-14},
+	date = {2019-11-13},
+	eprinttype = {arxiv},
+	eprint = {1903.03894 [cs, stat]},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {arXiv Fulltext PDF:/Users/shalinpatel/Zotero/storage/79G86HQS/Ying et al. - 2019 - GNNExplainer Generating Explanations for Graph Ne.pdf:application/pdf;arXiv.org Snapshot:/Users/shalinpatel/Zotero/storage/5WUE7UYQ/1903.html:text/html},
 }
 
-@article{arboreto,
-    author = {Moerman, Thomas and Aibar Santos, Sara and Bravo González-Blas, Carmen and Simm, Jaak and Moreau, Yves and Aerts, Jan and Aerts, Stein},
-    title = "{GRNBoost2 and Arboreto: efficient and scalable inference of gene regulatory networks}",
-    journal = {Bioinformatics},
-    volume = {35},
-    number = {12},
-    pages = {2159-2161},
-    year = {2018},
-    month = {11},
-    abstract = "{Inferring a Gene Regulatory Network (GRN) from gene expression data is a computationally expensive task, exacerbated by increasing data sizes due to advances in high-throughput gene profiling technology, such as single-cell RNA-seq. To equip researchers with a toolset to infer GRNs from large expression datasets, we propose GRNBoost2 and the Arboreto framework. GRNBoost2 is an efficient algorithm for regulatory network inference using gradient boosting, based on the GENIE3 architecture. Arboreto is a computational framework that scales up GRN inference algorithms complying with this architecture. Arboreto includes both GRNBoost2 and an improved implementation of GENIE3, as a user-friendly open source Python package.Arboreto is available under the 3-Clause BSD license at http://arboreto.readthedocs.io.Supplementary data are available at Bioinformatics online.}",
-    issn = {1367-4803},
-    doi = {10.1093/bioinformatics/bty916},
-    url = {https://doi.org/10.1093/bioinformatics/bty916},
-    eprint = {https://academic.oup.com/bioinformatics/article-pdf/35/12/2159/28839601/bty916.pdf},
+@misc{luo_parameterized_2020,
+	title = {Parameterized Explainer for Graph Neural Network},
+	url = {http://arxiv.org/abs/2011.04573},
+	doi = {10.48550/arXiv.2011.04573},
+	abstract = {Despite recent progress in Graph Neural Networks ({GNNs}), explaining predictions made by {GNNs} remains a challenging open problem. The leading method independently addresses the local explanations (i.e., important subgraph structure and node features) to interpret why a {GNN} model makes the prediction for a single instance, e.g. a node or a graph. As a result, the explanation generated is painstakingly customized for each instance. The unique explanation interpreting each instance independently is not sufficient to provide a global understanding of the learned {GNN} model, leading to a lack of generalizability and hindering it from being used in the inductive setting. Besides, as it is designed for explaining a single instance, it is challenging to explain a set of instances naturally (e.g., graphs of a given class). In this study, we address these key challenges and propose {PGExplainer}, a parameterized explainer for {GNNs}. {PGExplainer} adopts a deep neural network to parameterize the generation process of explanations, which enables {PGExplainer} a natural approach to explaining multiple instances collectively. Compared to the existing work, {PGExplainer} has better generalization ability and can be utilized in an inductive setting easily. Experiments on both synthetic and real-life datasets show highly competitive performance with up to 24.7{\textbackslash}\% relative improvement in {AUC} on explaining graph classification over the leading baseline.},
+	number = {{arXiv}:2011.04573},
+	publisher = {{arXiv}},
+	author = {Luo, Dongsheng and Cheng, Wei and Xu, Dongkuan and Yu, Wenchao and Zong, Bo and Chen, Haifeng and Zhang, Xiang},
+	urldate = {2023-03-14},
+	date = {2020-11-09},
+	eprinttype = {arxiv},
+	eprint = {2011.04573 [cs]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Machine Learning},
+	file = {arXiv Fulltext PDF:/Users/shalinpatel/Zotero/storage/3IZJBY7Y/Luo et al. - 2020 - Parameterized Explainer for Graph Neural Network.pdf:application/pdf;arXiv.org Snapshot:/Users/shalinpatel/Zotero/storage/UEIKD4SP/2011.html:text/html},
 }
 
-@article{pytorch,
-    title = {PyTorch: An Imperative Style, High-Performance Deep Learning Library},
-    author = {Paszke, Adam and Gross, Sam and Massa, Francisco and Lerer, Adam and Bradbury, James and Chanan, Gregory and Killeen, Trevor and Lin, Zeming and Gimelshein, Natalia and Antiga, Luca and Desmaison, Alban and Kopf, Andreas and Yang, Edward and DeVito, Zachary and Raison, Martin and Tejani, Alykhan and Chilamkurthy, Sasank and Steiner, Benoit and Fang, Lu and Bai, Junjie and Chintala, Soumith},
-    booktitle = {Advances in Neural Information Processing Systems 32},
-    editor = {H. Wallach and H. Larochelle and A. Beygelzimer and F. d\textquotesingle Alch\'{e}-Buc and E. Fox and R. Garnett},
-    pages = {8024--8035},
-    year = {2019},
-    publisher = {Curran Associates, Inc.},
-    url = {http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf}
+@article{moerman_grnboost2_2019,
+	title = {{GRNBoost}2 and Arboreto: efficient and scalable inference of gene regulatory networks},
+	volume = {35},
+	issn = {1367-4803},
+	url = {https://doi.org/10.1093/bioinformatics/bty916},
+	doi = {10.1093/bioinformatics/bty916},
+	shorttitle = {{GRNBoost}2 and Arboreto},
+	abstract = {Inferring a Gene Regulatory Network ({GRN}) from gene expression data is a computationally expensive task, exacerbated by increasing data sizes due to advances in high-throughput gene profiling technology, such as single-cell {RNA}-seq. To equip researchers with a toolset to infer {GRNs} from large expression datasets, we propose {GRNBoost}2 and the Arboreto framework. {GRNBoost}2 is an efficient algorithm for regulatory network inference using gradient boosting, based on the {GENIE}3 architecture. Arboreto is a computational framework that scales up {GRN} inference algorithms complying with this architecture. Arboreto includes both {GRNBoost}2 and an improved implementation of {GENIE}3, as a user-friendly open source Python package.Arboreto is available under the 3-Clause {BSD} license at http://arboreto.readthedocs.io.Supplementary data are available at Bioinformatics online.},
+	pages = {2159--2161},
+	number = {12},
+	journaltitle = {Bioinformatics},
+	shortjournal = {Bioinformatics},
+	author = {Moerman, Thomas and Aibar Santos, Sara and Bravo González-Blas, Carmen and Simm, Jaak and Moreau, Yves and Aerts, Jan and Aerts, Stein},
+	urldate = {2023-03-14},
+	date = {2019-06-15},
+	file = {Full Text PDF:/Users/shalinpatel/Zotero/storage/ZD6M9CTH/Moerman et al. - 2019 - GRNBoost2 and Arboreto efficient and scalable inf.pdf:application/pdf;Snapshot:/Users/shalinpatel/Zotero/storage/XKU5SQLY/5184284.html:text/html},
 }
 
-@article{wang2020session,
-  title={Session-Based Graph Convolutional ARMA Filter Recommendation Model},
-  author={Wang, Huanwen and Xiao, Guangyi and Han, Ning and Chen, Hao},
-  journal={IEEE Access},
-  volume={8},
-  pages={62053--62064},
-  year={2020},
-  publisher={IEEE}
+@misc{paszke_pytorch_2019,
+	title = {{PyTorch}: An Imperative Style, High-Performance Deep Learning Library},
+	url = {http://arxiv.org/abs/1912.01703},
+	doi = {10.48550/arXiv.1912.01703},
+	shorttitle = {{PyTorch}},
+	abstract = {Deep learning frameworks have often focused on either usability or speed, but not both. {PyTorch} is a machine learning library that shows that these two goals are in fact compatible: it provides an imperative and Pythonic programming style that supports code as a model, makes debugging easy and is consistent with other popular scientific computing libraries, while remaining efficient and supporting hardware accelerators such as {GPUs}. In this paper, we detail the principles that drove the implementation of {PyTorch} and how they are reflected in its architecture. We emphasize that every aspect of {PyTorch} is a regular Python program under the full control of its user. We also explain how the careful and pragmatic implementation of the key components of its runtime enables them to work together to achieve compelling performance. We demonstrate the efficiency of individual subsystems, as well as the overall speed of {PyTorch} on several common benchmarks.},
+	number = {{arXiv}:1912.01703},
+	publisher = {{arXiv}},
+	author = {Paszke, Adam and Gross, Sam and Massa, Francisco and Lerer, Adam and Bradbury, James and Chanan, Gregory and Killeen, Trevor and Lin, Zeming and Gimelshein, Natalia and Antiga, Luca and Desmaison, Alban and Köpf, Andreas and Yang, Edward and {DeVito}, Zach and Raison, Martin and Tejani, Alykhan and Chilamkurthy, Sasank and Steiner, Benoit and Fang, Lu and Bai, Junjie and Chintala, Soumith},
+	urldate = {2023-03-14},
+	date = {2019-12-03},
+	eprinttype = {arxiv},
+	eprint = {1912.01703 [cs, stat]},
+	keywords = {Computer Science - Machine Learning, Computer Science - Mathematical Software, Statistics - Machine Learning},
+	file = {arXiv Fulltext PDF:/Users/shalinpatel/Zotero/storage/Y6APV9BY/Paszke et al. - 2019 - PyTorch An Imperative Style, High-Performance Dee.pdf:application/pdf;arXiv.org Snapshot:/Users/shalinpatel/Zotero/storage/UG3LGATS/1912.html:text/html},
 }
 
-@article{adam,
-  abstract = {We introduce Adam, an algorithm for first-order gradient-based optimization
-of stochastic objective functions, based on adaptive estimates of lower-order
-moments. The method is straightforward to implement, is computationally
-efficient, has little memory requirements, is invariant to diagonal rescaling
-of the gradients, and is well suited for problems that are large in terms of
-data and/or parameters. The method is also appropriate for non-stationary
-objectives and problems with very noisy and/or sparse gradients. The
-hyper-parameters have intuitive interpretations and typically require little
-tuning. Some connections to related algorithms, on which Adam was inspired, are
-discussed. We also analyze the theoretical convergence properties of the
-algorithm and provide a regret bound on the convergence rate that is comparable
-to the best known results under the online convex optimization framework.
-Empirical results demonstrate that Adam works well in practice and compares
-favorably to other stochastic optimization methods. Finally, we discuss AdaMax,
-a variant of Adam based on the infinity norm.},
-  added-at = {2020-01-17T03:14:27.000+0100},
-  author = {Kingma, Diederik P. and Ba, Jimmy},
-  biburl = {https://www.bibsonomy.org/bibtex/2d53bcfff0fe1a1d3a4a171352ee6e92c/simon_diener},
-  description = {An upgrade over the standard stochastic gradient descend as it is able to apply changes to the learning rate by itself to be able to escape local maxima etc. This methods was used for the dynamic explainable recommender framework by Chen et al.},
-  interhash = {57d2ac873f398f21bb94790081e80394},
-  intrahash = {d53bcfff0fe1a1d3a4a171352ee6e92c},
-  keywords = {final thema:neural_attentional_rating_regression},
-  note = {cite arxiv:1412.6980Comment: Published as a conference paper at the 3rd International Conference  for Learning Representations, San Diego, 2015},
-  timestamp = {2020-01-17T03:14:27.000+0100},
-  title = {Adam: A Method for Stochastic Optimization},
-  url = {http://arxiv.org/abs/1412.6980},
-  year = 2014
+@misc{kingma_adam_2017,
+	title = {Adam: A Method for Stochastic Optimization},
+	url = {http://arxiv.org/abs/1412.6980},
+	doi = {10.48550/arXiv.1412.6980},
+	shorttitle = {Adam},
+	abstract = {We introduce Adam, an algorithm for first-order gradient-based optimization of stochastic objective functions, based on adaptive estimates of lower-order moments. The method is straightforward to implement, is computationally efficient, has little memory requirements, is invariant to diagonal rescaling of the gradients, and is well suited for problems that are large in terms of data and/or parameters. The method is also appropriate for non-stationary objectives and problems with very noisy and/or sparse gradients. The hyper-parameters have intuitive interpretations and typically require little tuning. Some connections to related algorithms, on which Adam was inspired, are discussed. We also analyze the theoretical convergence properties of the algorithm and provide a regret bound on the convergence rate that is comparable to the best known results under the online convex optimization framework. Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss {AdaMax}, a variant of Adam based on the infinity norm.},
+	number = {{arXiv}:1412.6980},
+	publisher = {{arXiv}},
+	author = {Kingma, Diederik P. and Ba, Jimmy},
+	urldate = {2023-03-14},
+	date = {2017-01-29},
+	eprinttype = {arxiv},
+	eprint = {1412.6980 [cs]},
+	keywords = {Computer Science - Machine Learning},
+	file = {arXiv Fulltext PDF:/Users/shalinpatel/Zotero/storage/UC2VTKA2/Kingma and Ba - 2017 - Adam A Method for Stochastic Optimization.pdf:application/pdf;arXiv.org Snapshot:/Users/shalinpatel/Zotero/storage/VTVYHDKP/1412.html:text/html},
+}
+
+@misc{bingham_pyro_2018,
+	title = {Pyro: Deep Universal Probabilistic Programming},
+	url = {http://arxiv.org/abs/1810.09538},
+	doi = {10.48550/arXiv.1810.09538},
+	shorttitle = {Pyro},
+	abstract = {Pyro is a probabilistic programming language built on Python as a platform for developing advanced probabilistic models in {AI} research. To scale to large datasets and high-dimensional models, Pyro uses stochastic variational inference algorithms and probability distributions built on top of {PyTorch}, a modern {GPU}-accelerated deep learning framework. To accommodate complex or model-specific algorithmic behavior, Pyro leverages Poutine, a library of composable building blocks for modifying the behavior of probabilistic programs.},
+	number = {{arXiv}:1810.09538},
+	publisher = {{arXiv}},
+	author = {Bingham, Eli and Chen, Jonathan P. and Jankowiak, Martin and Obermeyer, Fritz and Pradhan, Neeraj and Karaletsos, Theofanis and Singh, Rohit and Szerlip, Paul and Horsfall, Paul and Goodman, Noah D.},
+	urldate = {2023-03-14},
+	date = {2018-10-18},
+	eprinttype = {arxiv},
+	eprint = {1810.09538 [cs, stat]},
+	keywords = {Computer Science - Machine Learning, Computer Science - Programming Languages, Statistics - Machine Learning},
+	file = {arXiv Fulltext PDF:/Users/shalinpatel/Zotero/storage/LGCDUSM9/Bingham et al. - 2018 - Pyro Deep Universal Probabilistic Programming.pdf:application/pdf;arXiv.org Snapshot:/Users/shalinpatel/Zotero/storage/UYPKSQM3/1810.html:text/html},
+}
+
+@article{kobyzev_normalizing_2021,
+	title = {Normalizing Flows: An Introduction and Review of Current Methods},
+	volume = {43},
+	issn = {0162-8828, 2160-9292, 1939-3539},
+	url = {http://arxiv.org/abs/1908.09257},
+	doi = {10.1109/TPAMI.2020.2992934},
+	shorttitle = {Normalizing Flows},
+	abstract = {Normalizing Flows are generative models which produce tractable distributions where both sampling and density evaluation can be efficient and exact. The goal of this survey article is to give a coherent and comprehensive review of the literature around the construction and use of Normalizing Flows for distribution learning. We aim to provide context and explanation of the models, review current state-of-the-art literature, and identify open questions and promising future directions.},
+	pages = {3964--3979},
+	number = {11},
+	journaltitle = {{IEEE} Transactions on Pattern Analysis and Machine Intelligence},
+	shortjournal = {{IEEE} Trans. Pattern Anal. Mach. Intell.},
+	author = {Kobyzev, Ivan and Prince, Simon J. D. and Brubaker, Marcus A.},
+	urldate = {2023-03-14},
+	date = {2021-11-01},
+	eprinttype = {arxiv},
+	eprint = {1908.09257 [cs, stat]},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {arXiv Fulltext PDF:/Users/shalinpatel/Zotero/storage/X7SCTINI/Kobyzev et al. - 2021 - Normalizing Flows An Introduction and Review of C.pdf:application/pdf;arXiv.org Snapshot:/Users/shalinpatel/Zotero/storage/ZLFLE2CJ/1908.html:text/html},
+}
+
+@article{petralia_new_2016,
+	title = {New Method for Joint Network Analysis Reveals Common and Different Coexpression Patterns among Genes and Proteins in Breast Cancer},
+	volume = {15},
+	issn = {1535-3893},
+	url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4782177/},
+	doi = {10.1021/acs.jproteome.5b00925},
+	abstract = {, We focus on characterizing
+common and different coexpression patterns
+among {RNAs} and proteins in breast cancer tumors. To address this problem,
+we introduce Joint Random Forest ({JRF}), a novel nonparametric algorithm
+to simultaneously estimate multiple coexpression networks by effectively
+borrowing information across protein and gene expression data. The
+performance of {JRF} was evaluated through extensive simulation studies
+using different network topologies and data distribution functions.
+Advantages of {JRF} over other algorithms that estimate class-specific
+networks separately were observed across all simulation settings.
+{JRF} also outperformed a competing method based on Gaussian graphic
+models. We then applied {JRF} to simultaneously construct gene and protein
+coexpression networks based on protein and {RNAseq} data from {CPTAC}-{TCGA}
+breast cancer study. We identified interesting common and differential
+coexpression patterns among genes and proteins. This information can
+help to cast light on the potential disease mechanisms of breast cancer.},
+	pages = {743--754},
+	number = {3},
+	journaltitle = {Journal of Proteome Research},
+	shortjournal = {J Proteome Res},
+	author = {Petralia, Francesca and Song, Won-Min and Tu, Zhidong and Wang, Pei},
+	urldate = {2023-03-14},
+	date = {2016-03-04},
+	pmid = {26733076},
+	pmcid = {PMC4782177},
+	file = {PubMed Central Full Text PDF:/Users/shalinpatel/Zotero/storage/WE2ZVVG9/Petralia et al. - 2016 - New Method for Joint Network Analysis Reveals Comm.pdf:application/pdf},
+}
+
+@inproceedings{cho_friendship_2011,
+	location = {New York, {NY}, {USA}},
+	title = {Friendship and mobility: user movement in location-based social networks},
+	isbn = {978-1-4503-0813-7},
+	url = {https://doi.org/10.1145/2020408.2020579},
+	doi = {10.1145/2020408.2020579},
+	series = {{KDD} '11},
+	shorttitle = {Friendship and mobility},
+	abstract = {Even though human movement and mobility patterns have a high degree of freedom and variation, they also exhibit structural patterns due to geographic and social constraints. Using cell phone location data, as well as data from two online location-based social networks, we aim to understand what basic laws govern human motion and dynamics. We find that humans experience a combination of periodic movement that is geographically limited and seemingly random jumps correlated with their social networks. Short-ranged travel is periodic both spatially and temporally and not effected by the social network structure, while long-distance travel is more influenced by social network ties. We show that social relationships can explain about 10\% to 30\% of all human movement, while periodic behavior explains 50\% to 70\%. Based on our findings, we develop a model of human mobility that combines periodic short range movements with travel due to the social network structure. We show that our model reliably predicts the locations and dynamics of future human movement and gives an order of magnitude better performance than present models of human mobility.},
+	pages = {1082--1090},
+	booktitle = {Proceedings of the 17th {ACM} {SIGKDD} international conference on Knowledge discovery and data mining},
+	publisher = {Association for Computing Machinery},
+	author = {Cho, Eunjoon and Myers, Seth A. and Leskovec, Jure},
+	urldate = {2023-03-14},
+	date = {2011-08-21},
+	keywords = {communication networks, human mobility, social networks},
+	file = {Full Text PDF:/Users/shalinpatel/Zotero/storage/EXA7D3DQ/Cho et al. - 2011 - Friendship and mobility user movement in location.pdf:application/pdf},
 }
