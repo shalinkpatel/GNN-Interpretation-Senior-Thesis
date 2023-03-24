@@ -1,4 +1,28 @@
 \section{Introduction}
-
+Graphs serve as a natural repository for information in many real-world applications ranging from social, informational, chemical, and biological domains \cite{cho_friendship_2011}. Especially as data becomes more and more unstructured, graphs represent a flexible manner for storing and relating different nodes and their related features \cite{washio_state_2003}. Indeed, graphs represent one of the most general mathematical structures for relating data and are seeing increasing use in modeling phenomenon such as social networks and gene regulatory networks \cite{washio_state_2003,petralia_new_2016}. For the purposes of this work, given a set of vertices $V$, node features $\mathcal{X} : V \rightarrow \mathbb{R}^{d}$, a set of edges $E \subseteq V \times V$, and weights on the edges $W : E \rightarrow \mathbb{R}$, we consider the graph $G = \{V, \mathcal{X}, E, W\}$. Additionally, we let the space of all graphs for a given set of vertices $V$ be $\mathcal{G}$.
 
 \subsection{Graph Neural Networks}
+To deal with the proliferation of graphs in computing and the need to construct models that consider graphs as a first-class member of the modeling process, a class of models known as Graph Neural Networks have emerged (GNN) with state of the art performance on a variety of classification and regression tasks \cite{ying_gnnexplainer_2019}. Specifically, GNNs and their early iterations in GCNs took inspiration from CNNs that represented applying successive convolution operations on regular grids of information, such as images, to compose local features in the grid in to higher-level predictions \cite{defferrard_convolutional_2017}. At a high level, most GNN frameworks can be split into three steps \verb|MSG|, \verb|AGG|, and \verb|UPD| representing a messaging step, aggregation step, and update step, respectively.
+
+At a layer $l$ in a GNN model $\phi$, the update of the hidden state of the model occurs first by sending messages for all $(v_{i}, v_{j}) \in E$ as a function of the hidden state $\mathcal{H}_{i}^{l-1}$ and $\mathcal{H}_{j}^{l-1}$ as well as the weight $W_{ij} := W(v_{i}, v_{j})$. Specifically, we have
+\begin{align*}
+  m_{ij}^{l} := \mathtt{MSG}(\mathcal{H}_{i}^{l-1}, \mathcal{H}_{j}^{l-1}, W_{ij})
+\end{align*}
+Then, a GNN performs an aggregation step wherein it calculates an aggregate message for every vertex $v \in V$. Let $\mathcal{N}_{k} : V \times E \rightarrow \mathcal{P}(E)$ be a function that returns the edges in the $k$-hop neighborhood of a node. Then, we can formally write the aggregation step as
+\begin{align*}
+  M_{i}^{l} := \mathtt{AGG}(\{m_{ij}^{l} \mid v_{j} \in \mathcal{N}_{k}(v_{i})\})
+\end{align*}
+Then, finally, at each node, the GNN takes a nonlinear function (often a neural network of some sort) and applies it to this aggregated message $M_{i}^{l}$ along with the hidden state $\mathcal{H}_{i}^{l-1}$ to get the new hidden state.
+\begin{align*}
+  \mathcal{H}_{i}^{l} := \mathtt{UPD}(\mathcal{H}_{i}^{l-1}, M_{i}^{l})
+\end{align*}
+When composed in layers, this forms a full Graph Neural Network. Note that in this framework, $\mathcal{H}_{i}^{0} := \mathcal{X}_{i}$. Based on the task type, either node or graph classification in this work, further layers may be added on top of the final output. For example, in graph classification, it is often the case that the final node embeddings are concatenated and then run through an MLP to get a final classification for the whole graph \cite{ying_gnnexplainer_2019}
+
+\subsection{Interpretation on GNNs}
+Given a GNN, it is natural in many fields such as computational biology to perform interpretation on the model in order to gain further insights. For example, in the case of RNA-seq data, a natural question is to determine important regulatory pathways between genes that could be related to eventual up or down regulation of a target gene \cite{petralia_new_2016}. One natural way to perform this task is to train a GNN on the RNA-seq data for a node-classification task and feed it a large graph $G$ with many redundant edges. Given a GNN model $\phi$ with $l$ layers and a target gene $v_{i} \in V$, we would like to determine $\mathcal{E}_{i} \subseteq \mathcal{N}_{l}(V_{i}, E)$ as well as $\mathcal{W}_{i} : \mathcal{E}_{i} \rightarrow \mathbb{R}$ such that $\mathcal{E}_{i}, \mathcal{W}_{i}$ represent the most important subgraph for the model $\phi$ to perform its predictions for the input vertex $V_{i}$. While there are a few criteria for determining importance, we consider importance to be the maximal mutual information between the original model with its inputs and the same model with the estimated subgraph $\mathcal{E}_{i}, \mathcal{W}_{i}$. Written more formally, we wish to discover
+\begin{align*}
+  \argmax_{\mathcal{E}_{i}, \mathcal{W}_{i}} \mathtt{MI}(\phi(V_{i}, \mathcal{X}, E, W), \phi(V_{i}, \mathcal{X}, \mathcal{E}_{i}, \mathcal{W}_{i}))
+\end{align*}
+Clearly, this is a hard problem as a brute force search would take $O(2^{|E|})$ time even when discounting the weight array $\mathcal{W}_{i}$.
+
+\subsection{Bayesian Inference}
