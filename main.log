@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2020.4.7)  24 MAR 2023 12:31
+This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2020.4.7)  24 MAR 2023 16:39
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -606,14 +606,14 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \headsep=25.0pt
 * \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=4.0pt
+* \marginparwidth=59.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
-* \@twocolumntrue
+* \@twocolumnfalse
 * \@twosidefalse
 * \@mparswitchfalse
 * \@reversemarginfalse
@@ -657,28 +657,13 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 42.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (./1_intro.tex
-Underfull \vbox (badness 2591) has occurred while \output is active []
+[1
 
- [1{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
-])
-(./2_related.tex) (./3_method.tex) (./4_exp.tex) (./5_results.tex)
-(./6_discuss.tex) (./main.bbl
-Underfull \hbox (badness 1769) in paragraph at lines 12--15
-\TU/lmr/m/n/10 of the art of graph-based data min-ing.
- []
-
-[2]
-Underfull \hbox (badness 1360) in paragraph at lines 27--30
-[]\TU/lmr/m/n/10 Michaël Def-fer-rard, Xavier Bres-son, and
- []
-
-)
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2]) (./2_related.tex) (./3_method.tex) (./4_exp.tex) (./5_results.tex)
+(./6_discuss.tex) (./main.bbl)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 56.
- [3
-
-]
+ [3]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 56.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 56.
@@ -689,19 +674,20 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 56.
 )
 
 Here is how much of LuaTeX's memory you used:
- 14283 strings out of 480992
+ 14288 strings out of 480992
  100000,552014 words of node,token memory allocated
  696 words of node memory still in use:
    7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 91 glue_spec,
  8 attribute_list, 1 write nodes
-   avail lists: 2:515,3:125,4:28,5:214,6:20,7:3646,8:40,9:215,10:15,11:260
- 31290 multiletter control sequences out of 65536+600000
- 76 fonts using 7252707 bytes
- 45i,9n,49p,1249b,448s stack positions out of 5000i,500n,10000p,200000b,100000s
+   avail lists: 2:416,3:102,4:35,5:212,6:18,7:3184,8:41,9:171,10:21,11:197
+ 31294 multiletter control sequences out of 65536+600000
+ 77 fonts using 7384395 bytes
+ 45i,9n,49p,1249b,336s stack positions out of 5000i,500n,10000p,200000b,100000s
 </usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.ot
 f></usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.
 otf></usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmroman10-regul
 ar.otf></usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmroman12-bo
+ld.otf></usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmroman10-bo
 ld.otf></usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmroman9-ita
 lic.otf></usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmroman6-re
 gular.otf></usr/local/texlive/2020/texmf-dist/fonts/opentype/public/lm/lmroman8-
@@ -716,10 +702,10 @@ fb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></
 usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></us
 r/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (3 pages, 120065 bytes).
+Output written on main.pdf (3 pages, 122374 bytes).
 
-PDF statistics: 173 PDF objects out of 1000 (max. 8388607)
- 130 compressed objects within 2 object streams
- 18 named destinations out of 1000 (max. 131072)
+PDF statistics: 182 PDF objects out of 1000 (max. 8388607)
+ 136 compressed objects within 2 object streams
+ 19 named destinations out of 1000 (max. 131072)
  73 words of extra memory for PDF output out of 10000 (max. 100000000)
 

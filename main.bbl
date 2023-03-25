@@ -28,4 +28,8 @@ Michaël Defferrard, Xavier Bresson, and Pierre Vandergheynst.
 \newblock Convolutional neural networks on graphs with fast localized spectral
   filtering.
 
+\bibitem{kipf_semi-supervised_2017}
+Thomas~N. Kipf and Max Welling.
+\newblock Semi-supervised classification with graph convolutional networks.
+
 \end{thebibliography}

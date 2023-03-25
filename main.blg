@@ -8,45 +8,45 @@ Warning--empty journal in washio_state_2003
 Warning--empty year in washio_state_2003
 Warning--empty journal in petralia_new_2016
 Warning--empty year in petralia_new_2016
-You've used 5 entries,
+You've used 6 entries,
             1791 wiz_defined-function locations,
-            471 strings with 4522 characters,
-and the built_in function-call counts, 1252 in all, are:
-= -- 104
-> -- 61
+            475 strings with 4661 characters,
+and the built_in function-call counts, 1384 in all, are:
+= -- 112
+> -- 69
 < -- 1
-+ -- 22
-- -- 17
-* -- 87
-:= -- 185
-add.period$ -- 14
-call.type$ -- 5
-change.case$ -- 5
++ -- 25
+- -- 19
+* -- 89
+:= -- 204
+add.period$ -- 16
+call.type$ -- 6
+change.case$ -- 6
 chr.to.int$ -- 0
-cite$ -- 10
-duplicate$ -- 51
-empty$ -- 124
-format.name$ -- 17
-if$ -- 278
+cite$ -- 11
+duplicate$ -- 56
+empty$ -- 142
+format.name$ -- 19
+if$ -- 309
 int.to.chr$ -- 0
-int.to.str$ -- 5
+int.to.str$ -- 6
 missing$ -- 3
-newline$ -- 26
-num.names$ -- 5
-pop$ -- 22
+newline$ -- 30
+num.names$ -- 6
+pop$ -- 27
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 40
+skip$ -- 48
 stack$ -- 0
 substring$ -- 84
-swap$ -- 15
+swap$ -- 16
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 5
-while$ -- 12
-width$ -- 6
-write$ -- 46
+while$ -- 13
+width$ -- 7
+write$ -- 53
 (There were 5 warnings)

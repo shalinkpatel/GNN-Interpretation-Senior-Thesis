@@ -16,13 +16,15 @@ Then, finally, at each node, the GNN takes a nonlinear function (often a neural 
 \begin{align*}
   \mathcal{H}_{i}^{l} := \mathtt{UPD}(\mathcal{H}_{i}^{l-1}, M_{i}^{l})
 \end{align*}
-When composed in layers, this forms a full Graph Neural Network. Note that in this framework, $\mathcal{H}_{i}^{0} := \mathcal{X}_{i}$. Based on the task type, either node or graph classification in this work, further layers may be added on top of the final output. For example, in graph classification, it is often the case that the final node embeddings are concatenated and then run through an MLP to get a final classification for the whole graph \cite{ying_gnnexplainer_2019}
+When composed in layers, this forms a full Graph Neural Network. Note that in this framework, $\mathcal{H}_{i}^{0} := \mathcal{X}_{i}$. Based on the task type, either node or graph classification in this work, further layers may be added on top of the final output. For example, in graph classification, it is often the case that the final node embeddings are concatenated and then run through an MLP to get a final classification for the whole graph \cite{ying_gnnexplainer_2019}.
+
+The specific layers used in this work are Graph Convolution Layers also known as GCNs \cite{kipf_semi-supervised_2017}. In the context of the framework above, the \verb|MSG| sends weighted and normalized node features from the $l-1$st layer where the normalization is by the out-degree of the sending node and the weight of the message coming from $\mathcal{W}_{ij}$. In the \verb|AGG| step, all of these messages are summed together. Finally, the \verb|UPD| step applies a neural network, usually a trainable linear layer combined with a non-linear activation function to provide a non-linear update step.
 
 \subsection{Interpretation on GNNs}
 Given a GNN, it is natural in many fields such as computational biology to perform interpretation on the model in order to gain further insights. For example, in the case of RNA-seq data, a natural question is to determine important regulatory pathways between genes that could be related to eventual up or down regulation of a target gene \cite{petralia_new_2016}. One natural way to perform this task is to train a GNN on the RNA-seq data for a node-classification task and feed it a large graph $G$ with many redundant edges. Given a GNN model $\phi$ with $l$ layers and a target gene $v_{i} \in V$, we would like to determine $\mathcal{E}_{i} \subseteq \mathcal{N}_{l}(V_{i}, E)$ as well as $\mathcal{W}_{i} : \mathcal{E}_{i} \rightarrow \mathbb{R}$ such that $\mathcal{E}_{i}, \mathcal{W}_{i}$ represent the most important subgraph for the model $\phi$ to perform its predictions for the input vertex $V_{i}$. While there are a few criteria for determining importance, we consider importance to be the maximal mutual information between the original model with its inputs and the same model with the estimated subgraph $\mathcal{E}_{i}, \mathcal{W}_{i}$. Written more formally, we wish to discover
 \begin{align*}
   \argmax_{\mathcal{E}_{i}, \mathcal{W}_{i}} \mathtt{MI}(\phi(V_{i}, \mathcal{X}, E, W), \phi(V_{i}, \mathcal{X}, \mathcal{E}_{i}, \mathcal{W}_{i}))
 \end{align*}
-Clearly, this is a hard problem as a brute force search would take $O(2^{|E|})$ time even when discounting the weight array $\mathcal{W}_{i}$.
+This is a computationally hard problem as a brute force search would take $O(2^{|E|})$ time even when discounting the weight array $\mathcal{W}_{i}$.
 
 \subsection{Bayesian Inference}
