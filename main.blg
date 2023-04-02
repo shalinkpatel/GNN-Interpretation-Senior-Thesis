@@ -1,5 +1,5 @@
-This is BibTeX, Version 0.99d (TeX Live 2020)
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+This is BibTeX, Version 0.99d
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: unsrt.bst
 Database file #1: refs.bib
@@ -8,45 +8,4 @@ Warning--empty journal in washio_state_2003
 Warning--empty year in washio_state_2003
 Warning--empty journal in petralia_new_2016
 Warning--empty year in petralia_new_2016
-You've used 6 entries,
-            1791 wiz_defined-function locations,
-            475 strings with 4661 characters,
-and the built_in function-call counts, 1384 in all, are:
-= -- 112
-> -- 69
-< -- 1
-+ -- 25
-- -- 19
-* -- 89
-:= -- 204
-add.period$ -- 16
-call.type$ -- 6
-change.case$ -- 6
-chr.to.int$ -- 0
-cite$ -- 11
-duplicate$ -- 56
-empty$ -- 142
-format.name$ -- 19
-if$ -- 309
-int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 3
-newline$ -- 30
-num.names$ -- 6
-pop$ -- 27
-preamble$ -- 1
-purify$ -- 0
-quote$ -- 0
-skip$ -- 48
-stack$ -- 0
-substring$ -- 84
-swap$ -- 16
-text.length$ -- 1
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 5
-while$ -- 13
-width$ -- 7
-write$ -- 53
 (There were 5 warnings)

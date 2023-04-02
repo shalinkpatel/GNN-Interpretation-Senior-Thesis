@@ -1,5 +1,5 @@
 default:
-	latexmk -lualatex -synctex=1 -bibtex main.tex
+	tectonic main.tex
 
 .PHONY: clean
 clean:
