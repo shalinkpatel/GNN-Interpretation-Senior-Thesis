@@ -21,17 +21,36 @@ with each $\mathcal{W}_i[v_j, v_k]$ is a value between $[0, 1]$ representing a B
 \begin{align*}
 	\argmin_{\mathcal{W}_i = \{\mathcal{W}_i[v_j, v_k] \mid (v_j, v_k) \in E\}} -\sum_{c=1}^C \mathbb{1}_{y = c} \log \mathcal{P}(\phi(v_i, \mathcal{X}, E, \mathcal{W}_i) = c)
 \end{align*}
-While there is some probabilistic formulation here, in effect, GNNExplainer optimizes an adjacency matrix in $[0, 1]$ against the mutual information of the model given the edge weights and the model with the original graph. This means that GNNExplainer learns no conditional structure between edges and does not take the graph dynamics into account while training. Hence, it is a pretty crude algorithm that provides only a summary of the interpretation using assumptions that are not generally applicable to GNNs.
+While there is some probabilistic formulation here, in effect, GNNExplainer optimizes an adjacency matrix in $[0, 1]$ against the mutual information of the model given the edge weights and the model with the original graph. This means that GNNExplainer learns no conditional structure between edges and does not take the graph dynamics into account while training. This is further emphasized with the fact that a mean-field approximation was used to assume conditional independence between the edges of the underlying graph. Hence, it is an algorithm that provides only a summary of the interpretation using assumptions that are not generally applicable to GNNs.
 \subsubsection{Benchmark Datasets}
 As one of the first explainer methods for GNNs, GNNExplainer created a set of synthetic datasets that serve as the canonical datasets for GNN Interpretability. The goal of this section is to describe these datasets and the perceived shortcomings in these datasets that led to an exploration of their validity and a setup for the experiments produced later that demonstrate the incorrectness of these datasets for the stated task.
-
-The main dataset focused on in this paper is the Tree-Cycles dataset \cite{ying_gnnexplainer_2019}. In this dataset trees of depth three are attached to cycles of length six in order to form and aggregate dataset. A GNN node classification task entails predicting whether a given node is either in a tree portion of the graph or in the cyclic portion of the graph with no given node features. The idea here is that the GNN can only rely upon the structure of the graph for its node classification and all its information must come from the edges. Hence interpretation on the edges of the GNN would reveal only information that could be gleaned from the graph structure. In figure \ref{fig:tree-cycles}, one can see an example of a portion of the dataset looking at a three-hop neighborhood around node 565.
-\begin{figure}[t]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{images/tree-cycles.pdf}
 	\caption{A look at the tree-cycles dataset at a three-hop neighborhood around node 565. In green are nodes classified as tree nodes and in red are nodes classified as cycle nodes. The dataset is almost 50\% balanced between these two types.}
 	\label{fig:tree-cycles}
 \end{figure}
+
+The main dataset focused on in this paper is the Tree-Cycles dataset \cite{ying_gnnexplainer_2019}. In this dataset trees of depth three are attached to cycles of length six in order to form and aggregate dataset. A GNN node classification task entails predicting whether a given node is either in a tree portion of the graph or in the cyclic portion of the graph with no given node features. The idea here is that the GNN can only rely upon the structure of the graph for its node classification and all its information must come from the edges. Hence interpretation on the edges of the GNN would reveal only information that could be gleaned from the graph structure. In figure \ref{fig:tree-cycles}, one can see an example of a portion of the dataset looking at a three-hop neighborhood around node 565.
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{images/tree-cycles-pos.pdf}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{images/tree-cycles-neg.pdf}
+	\end{subfigure}
+	\caption{Demonstrations of the proposed groundtruths under \cite{ying_gnnexplainer_2019} for the tree-cycles dataset. On the left is the proposed groundtruth for a node in the cycle (565) and on the right is the proposed ground truth for a node in a tree (72).}
+	\label{fig:tree-cycles-proposed-gt}
+\end{figure}
+
+While this is a great construction to test an interpretation method, given that the GNN only relies on the graph structure for prediction, it is difficult to imagine what the ground truth for a given dataset is. The paper that introduced GNNExplainer proposed that the groundtruths be motifs in the graph. So if a node was in a cycle portion, the groundtruth would be the edges in the cycle and if a node was in the tree portion, the groundtruth would be the edges of the tree. This can be seen in figure \ref{fig:tree-cycles-proposed-gt} which shows the proposed ground truths. While this is a valid task for an interpretation technique to attempt to solve, it does not have direct bearing on the task that the GNN was trained on and it does not have direct bearing on the mutual information framework that forms the theoretical underpinning for GNN interpretability. 
+
+In a simple example, suppose a GNN is trained on the tree-cycles dataset. While it might be nice if the GNN needed all the edges in a cycle structure to determine that the node is, indeed, in the cycle, the GNN could have just as easily learned to use five edges from the cycle to make its predictions. Even if a theoretical GNN interpretation model was perfect, the fact that the GNN itself does not use the sixth edge means that an interpretation technique is doomed to max its accuracy score at $5/6$ which would make it impossible to compare between methods. Furthermore, a GNN may learn to mix motifs when making its prediction. Consider node 565 in the exampel from figure \ref{fig:tree-cycles}. While this node is in the cycle portion of the graph, the GNN could very easily learn that the node is \textit{adjacent} to the tree structure detected in node 72 and learn to make the inverse decision in this case. Notably, there is no garuntee that a GNN learns the motifs as the important substrucutres and there is little chance that across nodes, it consistently learns these rules. Indeed, it will be shown later that GNNExplainer itself struggles to meet its $>90\%$ accuracy scores for this benchmark in replication studies \cite{yuan_explainability_2021} \cite{lin_generative_2021} and that a thorough search through all connected subgraphs fails to yield this structure as the ground truth. 
+
+While GNNExplainer suggests a few other benchmark datasets, they all suffer from the same issue. Namely, they claim that the groundthruth is the embedded motif structure, but a simple tests reveal that this is not consistently true and nor should it be true in the general case. Hence, the goal of this paper is to also provide a set of alternative benchmarks agaisnt which to evaluate GNN interpretability.
 
 \subsection{Parametrized-Graph Explainer}
 
