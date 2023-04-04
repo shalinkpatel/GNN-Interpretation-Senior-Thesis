@@ -53,6 +53,7 @@ In a simple example, suppose a GNN is trained on the tree-cycles dataset. While 
 While GNNExplainer suggests a few other benchmark datasets, they all suffer from the same issue. Namely, they claim that the groundthruth is the embedded motif structure, but a simple tests reveal that this is not consistently true and nor should it be true in the general case. Hence, the goal of this paper is to also provide a set of alternative benchmarks agaisnt which to evaluate GNN interpretability.
 
 \subsection{Parametrized-Graph Explainer}
+Parametrized-Graph Explainer (PGExplainer for short) aims to take the GNNExplainer process and parametrized so that after training a deep neural network, new explanations per node could be generated with the much smaller cost of conducting inference on a give node $v_i$.
 
 \subsection{Other Explainer Frameworks}
 
