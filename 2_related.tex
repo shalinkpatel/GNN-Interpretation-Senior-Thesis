@@ -99,8 +99,8 @@ The GEM framework attempts to use Granger Causality to guide its exploration pro
 SERGIO is a model for simulating single cell gene expression data with guidance from gene regulatory networks \cite{dibaeinia_sergio_2020}. Before SERGIO, most methods of simulating single cell expression data came from analyzing the statistical properties of real-life single cell datasets and then matching these properties with appropriate distributions that could then be sampled from in order to generate new data. While these methods got more and more sophisticated in the number of statistics they matched against, there was no inclusion of gene regulatory networks (GRNs) which are crucial for single cell expression profiles both in the steady state and dynamical regimesWhile these methods got more and more sophisticated in the number of statistics they matched against, there was no inclusion of gene regulatory networks (GRNs) which are crucial for single cell expression profiles both in the steady state and dynamical regimes.
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.6\textwidth]{images/sergio.png}
-	\caption{A graphic from the SERGIO paper detailing the inputs and outputs to the SERGIO process \cite{dibaeinia_sergio_2020}}
+	\includegraphics[width=0.8\textwidth]{images/sergio.png}
+	\caption{A graphic from the SERGIO paper detailing the inputs and outputs to the SERGIO process \cite{dibaeinia_sergio_2020}. Specifically, a ground truth GRN is utilized to generate the data and recovering this GRN from the data could be a task for a GNN interpretation task.}
 	\label{fig:sergio}
 \end{figure}
 
