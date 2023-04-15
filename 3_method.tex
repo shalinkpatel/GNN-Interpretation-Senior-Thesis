@@ -59,8 +59,8 @@ While \cite{bolla_estimating_2017} demonstated a novel technique to train the pa
 		\Require $c \sim \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), \mathcal{W})$
 		\State $\alpha \gets [\bar{\alpha} \mid \forall v_j \in V_{i,l}]$
 		\State $\beta \gets [\bar{\beta} \mid \forall v_j \in V_{i, l}]$
-		\State $\mathcal{W}_i(v_j, v_k) \sim Beta(\alpha_j, \beta_k) \quad\quad \forall (v_j, v_k) \in \mathcal{N}_l(v_i, E)$
-		\State $\hat{y} \gets \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), \mathcal{W}_i)$
+		\State $W_i(v_j, v_k) \sim Beta(\alpha_j, \beta_k) \quad\quad \forall (v_j, v_k) \in \mathcal{N}_l(v_i, E)$
+		\State $\hat{y} \gets \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), W_i)$
 		\State $\hat{c} \sim \hat{y}$
 	\end{algorithmic}
 \end{algorithm}
@@ -71,3 +71,65 @@ The SVI algorithm then optimizes against the $\alpha$ and $\beta$ parameters to 
 In this work, there are two specific normalizing flow models that are tested. In one, the system is trained using SVI to utilize the ELBO as the objective, while in the other a simple KL-divergence is computed and the parameters of the normalizing flow are directly optimized using an appropriate SGD algorithm.
 
 \subsubsection{Spline Coupling Normalizing Flows}
+As mentioned in section \S\ref{sec:normalizing-flows}, for a fully universal normalizing flow model, more expressive transformations are required than invertible affine transformations. One such method comes from spline coupling normalizing flow layers as described in \cite{dolatabadi_invertible_2020}. In this work, spline transforms are combined with coupling layer transforms.
+
+First, we describe coupling layer transforms. In this category of transforms, the output of a layer consists of two parts. Let $z \in \mathbb{R}^D$ be the data to be transformed. Then we split this data such that $z_1 \in \mathbb{R}^d$ and $z_2 \in \mathbb{R}^{D - d}$. They are then transformed according to
+\begin{align*}
+	x_1 &= z_1 \\
+	x_2 &= g_{\theta(x_1)}(z_2)
+\end{align*}
+with the final output being $x = [x_1; x_2]$. Plenty of different $g_{\theta(x_1)}$ have been proposed. In this work, the neural linear splines from \cite{dolatabadi_invertible_2020} are used due to their competitive performance compared to quadratic or cubic splines as well as increased computational performance.
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=\textwidth]{images/coupling-flow.png}
+	\caption{Different normalizing flow models on a synthetic conditionally distributed dataset. From left to right: ground truth, Glow, i-ResNet, Linear Rational Splines (this method). Taken from \cite{dolatabadi_invertible_2020}}
+	\label{fig:coupling-flow}
+\end{figure}
+
+Most importantly, these coupling flows are able to capture full conditional distributions and have been used in models such as VAEs and generative models \cite{kobyzev_normalizing_2021} as seen in figure \ref{fig:coupling-flow}. Crucially, this gives an extremely flexible family of distributions that ought to be able to capture the conditional structure that exists within a graph.
+
+\subsubsection{General Normalizing Flow Model}
+In general, the normalizing flow will will operate as follows:
+\begin{enumerate}
+	\item A value will be sampled from a base distribution $b \sim \mathcal{B}$ with $\mathcal{B}$ being a fixed base distribution. In this case, we chose 
+	\[
+		\mathcal{B} = Beta(0.95, 0.95)
+	\]
+	in order to bias the explanation towards sparse explanations that are favored in the literature \cite{yuan_explainability_2021}.
+	\item The value then gets put through a series of $m$ linear rational spline coupling normalizing flows giving the edge mask distribution. Let all the layers be denoted by $\mathcal{L}_{\mathcal{B}, \Theta}$ where $\Theta$ represents the parameters of the LRS layers. Therefore, we have
+	\begin{align*}
+		W_i = \sigma(\mathcal{L}_{\mathcal{B}, \Theta}(b))
+	\end{align*}
+	where $\sigma$ is the standard sigmoid function.
+	\item Finally, we get the conditional GNN classifier $\hat{y}$ as the distribution given by
+	\begin{align*}
+		\hat{y} = \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), W_i)
+	\end{align*}
+	from which we apply a learning algorithm to obtain the weights $\Theta$
+	\item Once this is done, the final edge interpretation is given by
+	\begin{align*}
+		\mathcal{W}_i = \mathbb{E}[\sigma(\mathcal{L}_{\mathcal{B}, \Theta})]
+	\end{align*}
+	which is obtained simply by averaging Monte-Carlo sampling of the LRS layers.
+\end{enumerate}
+For the graph edge interpretation model, this is the most general Bayesian algorithm that can be given due to the universality of the LRS coupling normalizing flow. Since the graph interpretation is expected to be quite a complicated distribution, the goal of this method is to capture all of the higher order complexities, including multi-hop relationships. The listing \ref{alg:nf-model} succintly captures this algorithm.
+\begin{algorithm}[h]
+	\centering
+	\caption{The model setup for the Normalizing Flow model}
+	\label{alg:nf-model}
+	\begin{algorithmic}
+		\Require $v_i \in V, \bar{\alpha} > 0, \bar{\beta} > 0$
+		\Require $c \sim \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), \mathcal{W})$
+		\State $b \sim B$
+		\State $W_i \gets \sigma(\mathcal{L}_{\mathcal{B}, \Theta}(b))$
+		\State $\hat{y} \gets \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), W_i)$
+		\State $\hat{c} \sim \hat{y}$
+	\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{KL-Divergence and Direct Optimization}
+The first method used to train the parameters $\Theta$ is taking the disrtibution $\hat{c}$ and $c$ and backpropogating against the KL-divergence of these two distributions. Because of the reparametrization trick and the fact that the GNN is fully differentiable, this gives the gradient of the KL-divergence against $\Theta$ and allows for direct optimization against these parameters. Any SGD algorithm can be used, and, in particular, the ADAM optimizer \cite{kingma_adam_2017} is used in this model.
+
+\subsubsection{ELBO and SVI}
+The second method is to use the ELBO and SVI method that was discussed before. Because the distributions in this model have already been reparametrized, there is no real major difference other than the stability of the training process. As such, this method is included for completeness even though, it is expected, that these two methods have the same theoretical outcome.
+\newpage

@@ -1,0 +1,15 @@
+digraph G {
+	a [label = "1"];
+	b [label = "2"];
+	c [label = "3"];
+	d [label = "4"];
+	e [label = "5"];
+	f [label = "6"];
+	g [label = "7"];
+	a -> b [weight=0.5, label = "p/2", labelfloat=true];
+	a -> e [weight=0.5, label = "p/2", labelfloat=true];
+	c -> b [weight=1, label = "p", labelfloat=true];
+	d -> b [weight=1, label = "p", labelfloat=true];
+	f -> e [weight=1, label = "p", labelfloat=true];
+	g -> e [weight=1, label = "p", labelfloat=true];
+}

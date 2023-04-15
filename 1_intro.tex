@@ -80,6 +80,7 @@ Generally speaking, the exponential family of distributions can all be construct
 This is much friendlier to compute since $\epsilon$ is now a constant with respect to $\phi$ and lets us perform SVI through multiple layers of transformations simply by using bijectors like $t$.
 
 \subsection{Normalizing Flows}
+\label{sec:normalizing-flows}
 The technique that was described in \S\ref{sec:bayes-by-backprop} is more generally known as a normalizing flow. While it was described earlier in the context of a reparametrization technique in which the $t$ are fixed, there is no such restriction in reality. More concretely, the $t$ do not have to be simple functions but, rather, can be learnable functions in their own right. This allows one to use the normalizing flow technique to perform tasks like density estimation and distribution fitting with a very flexible class of transforms that take a simple distribution like a standard multivariate normal and make them into any computable distribution \cite{kobyzev_normalizing_2021}.
 \begin{figure}[t]
   \centering
@@ -92,3 +93,4 @@ Let the transformations of the base distribution be defined as $g = g_n \circ g_
   g_i(x) = Ax + b
 \end{align*}
 with the learnable parameters here being the matrix $A$ and bias vector $b$. As long as $A$ is an invertible matrix, we have a bijective function that can be used as a normalizing flow layer. Note that these linear layers can be interleaved with activation functions to provide non-linear transformations. This is important as a linear transformation of an exponential family will remain exponential so an element of non-linearity is required (as is the case with MLPs). While RELU is not invertible, a formulation like leaky-RELU can be used for this task \cite{xu_empirical_2015}. Still these are not super expressive. For a normalizing flow with universality, this paper utilizes rational quadratic spline based flows \cite{durkan_neural_2019}. When combined with variational inference over the prior base-distribution, this allows for a very flexible estimation of the posterior distribution no matter how complex.
+\newpage
