@@ -70,23 +70,24 @@ The SVI algorithm then optimizes against the $\alpha$ and $\beta$ parameters to 
 \subsection{Normalizing Flow Models}
 In this work, there are two specific normalizing flow models that are tested. In one, the system is trained using SVI to utilize the ELBO as the objective, while in the other a simple KL-divergence is computed and the parameters of the normalizing flow are directly optimized using an appropriate SGD algorithm.
 
-\subsubsection{Spline Coupling Normalizing Flows}
-As mentioned in section \S\ref{sec:normalizing-flows}, for a fully universal normalizing flow model, more expressive transformations are required than invertible affine transformations. One such method comes from spline coupling normalizing flow layers as described in \cite{dolatabadi_invertible_2020}. In this work, spline transforms are combined with coupling layer transforms.
+\subsubsection{Spline Autoregressive Normalizing Flows}
+As mentioned in section \S\ref{sec:normalizing-flows}, for a fully universal normalizing flow model, more expressive transformations are required than invertible affine transformations. One such method comes from spline autoregressive normalizing flow layers as described in \cite{dolatabadi_invertible_2020} and implemented in \cite{durkan_neural_2019}. In this work, spline transforms are combined with autoregressive layer transforms.
 
-First, we describe coupling layer transforms. In this category of transforms, the output of a layer consists of two parts. Let $z \in \mathbb{R}^D$ be the data to be transformed. Then we split this data such that $z_1 \in \mathbb{R}^d$ and $z_2 \in \mathbb{R}^{D - d}$. They are then transformed according to
+First, we describe autoregressive layer transforms in general. Given a random vector $Z = (Z_1, Z_2, \dots, Z_D)$ we can always write the distribution of this variable as
 \begin{align*}
-	x_1 &= z_1 \\
-	x_2 &= g_{\theta(x_1)}(z_2)
+	\mathcal{P}_Z(z) = \mathcal{P}_{Z_1}(z_1)\prod_{i=2}^D \mathcal{P}_{Z_i \mid Z_j \forall j < i}(z_i \mid z_j \forall j < i)
 \end{align*}
-with the final output being $x = [x_1; x_2]$. Plenty of different $g_{\theta(x_1)}$ have been proposed. In this work, the neural linear splines from \cite{dolatabadi_invertible_2020} are used due to their competitive performance compared to quadratic or cubic splines as well as increased computational performance.
-\begin{figure}[b]
+The aim of this representation is to chain $D$ invertible transformations to get the full distribution over $Z$. Note here, any normalizing flow can be used for each transformation. In this case, the LRS layers from \cite{dolatabadi_invertible_2020} are used.
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/coupling-flow.png}
-	\caption{Different normalizing flow models on a synthetic conditionally distributed dataset. From left to right: ground truth, Glow, i-ResNet, Linear Rational Splines (this method). Taken from \cite{dolatabadi_invertible_2020}}
+	\caption{Different normalizing flow models on a synthetic conditionally distributed dataset. From left to right: ground truth, Glow, i-ResNet, Linear Rational Splines (used in this method). Taken from \cite{dolatabadi_invertible_2020}}
 	\label{fig:coupling-flow}
 \end{figure}
 
-Most importantly, these coupling flows are able to capture full conditional distributions and have been used in models such as VAEs and generative models \cite{kobyzev_normalizing_2021} as seen in figure \ref{fig:coupling-flow}. Crucially, this gives an extremely flexible family of distributions that ought to be able to capture the conditional structure that exists within a graph.
+Most importantly, these coupling flows are able to capture full joint distributions and have been used in models such as VAEs and generative models \cite{kobyzev_normalizing_2021} as seen in figure \ref{fig:coupling-flow}. Crucially, this gives an extremely flexible family of distributions that ought to be able to capture the conditional structure that exists within a graph.
+
+More specifically, when sampling a random graph, one can begin the construction by taking a base edge and sampling a value from it. Then, to sample another edge, the distribution must be conditional on the distribution of the first edge. This process continues with each successive edge that is sampled being contingent on all preceding edges which is exactly what happens in the autoregressive transform. Hence, this is a good fit for the graph sampling problem.
 
 \subsubsection{General Normalizing Flow Model}
 In general, the normalizing flow will will operate as follows:

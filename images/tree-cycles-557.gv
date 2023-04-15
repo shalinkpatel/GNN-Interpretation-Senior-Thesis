@@ -1,0 +1,18 @@
+digraph G {
+	a [label = "56", color = green];
+	b [label = "59", color = green];
+	c [label = "553", color = red];
+	d [label = "554", color = red];
+	e [label = "555", color = red];
+	f [label = "556", color = red];
+	g [label = "557", color = red];
+	h [label = "558", color = red];
+	a -> c [dir=both, color = gray90];
+	b -> e [dir=both, color = gray90];
+	e -> d [dir=both, color = "black:gray90"];
+	d -> c [dir=both];
+	c -> h [dir=both];
+	h -> g [dir=both, color = "black:gray90"];
+	g -> f [dir=both, color = gray90];
+	f -> e [dir=both, color = gray90];
+}
