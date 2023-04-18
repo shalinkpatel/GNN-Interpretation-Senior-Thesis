@@ -1,3 +1,70 @@
 \section{Results}
+Below the results from the experiments mentioned in \S\ref{sec:exp-setup} are outlined. Specifically, there are two main experiments that were run: the noise filtering experiment and the graph embedding dataset. As will be seen, the performance of both the Beta model and Normalizing Flow model exceeds that of GNNExplainer and provides additional information into the edge mask distribution. Note that in \cite{yuan_explainability_2021} and \cite{lin_generative_2021}, both GNNExplainer and PGExplainer demonstrate similar performance with their implementations coming from \cite{fey_fast_2019}. PGExplainer was unable to run on these examples with all predictred edge masks being very close to zero and demonstrating poor performance as a result. Hence, GNNExplainer is considered to be representative of the state of the art for the purposes of this work.
+
+\subsection{Noise Filtering Experiment Results}
+Note that for the following table, any prediction that was in the original graph structure is automatically given a correct. As mentioned before, since the goal of this experiment is not to determine the actual ground truth, but rather, to determine the ability of the explainer models to filter noise. For this experiment each of the methods was fed 25\% of the nodes that have noisy edges as a test and the results were collated. Not all nodes had noisy edges because of the probablistic noise sampling mechanism, but on average 50\% of the edges were noisy. This methodology means that the interpretation methods were exposed to slightly greater than 50\% noise as all nodes with no noise were filtered out.
+
+As can be seen from the results in table \ref{tab:noise-filter-res}, GNNExplainer underperforms compared to both the Beta Model and the Normalizing Flow Model. The results indicate that all methods are doing a decent job at ensuring that noise is not picked up as important to the model. While there is room for improvement across the board, all methods demonstrate favorable performance with the bayesian learning methods leading the way in performance.
+\begin{table}[h] 
+	\centering
+	\begin{tabular}{|c||c|} \hline
+	Model & Accuracy\\ \hline \hline
+	GNNExplainer & 0.923\\ 
+	Beta Explainer & \textbf{0.982}\\ 
+	Normalizing Flow Explainer & 0.966\\ \hline
+	\end{tabular}
+	\caption{Accuracy results for all three models in the noise filtering experiment}
+	\label{tab:noise-filter-res}
+\end{table}
+
+
+In particular, the Beta Model 
+
+\subsection{Graph Embedding Experiment Results}
+With a known and confirmed groundtruth in this experiment, the interpretation methods were run through a few different metrics: accuracy, precision, recall, f1 score, and AUC. In this case, the interpretation methods were compared directly against the groundtruth and the results were averaged acorss nodes to get the final results as seen in table \ref{} and figure \ref{}.
+
+Based on these results, we can see that 
+
+\subsubsection{Beta Model Edge Mask Distribution}
+Additional, insights can be drawn about the GNN by looking at the distribution of edge mask values that the Beta Model came up with. In figure \ref{fig:tree-model-beta-marginal}, one can see the marginal distributions of edge mask values for each edge in the groundtruth. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/tree-model-beta-marginal.pdf}
+	\caption{Marginal edge weight distributions of all groundtruth edges in the beta model for a particular training point}
+	\label{fig:tree-model-beta-marginal}
+\end{figure}
+
+From this it can be seen that, 
+
+Furthermore, insights can be drawn by looking at the joint distribution between pairs of edges. This can give insight into what edges are correlated, anti-correlated, and how many modes there are to the edge mask distribution. This is important as it gives researchers insights into the different mechanisms that drive performance in the GNN. If the GNN is being used in a physical sciences or biology context, for example, this can help elucidate the various mechanisms that map to physical phenomenom. As seen in figure \ref{fig:tree-model-beta-joint}, the Beta Model helps provide a great first order approximation to these types of pathways.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/tree-model-beta-joint.pdf}
+	\caption{Joint edge weight distributions between pairs of groundtruth edges in the beta model for a particular training point}
+	\label{fig:tree-model-beta-joint}
+\end{figure}
+
+Specifically,
+
+\subsubsection{Normalizing Flow Model Edge Mask Distribution}
+A similar analysis can be done for the Normalizing Flow Model. Note that this model is much more flexible than the Beta model which gives it a higher variance but allows it to capture multiple different pathways and local minima that the GNN may experience. This can already be seen in the marginal distributions as seen in figure \ref{fig:tree-model-dnfg-marginal}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/tree-model-dnfg-marginal.pdf}
+	\caption{Marginal edge weight distributions for all groundtruth edges in the normalizing flow model for the same training point as \ref{fig:tree-model-beta-marginal}}
+	\label{fig:tree-model-dnfg-marginal}
+\end{figure}
+
+Indeed, 
+
+As with the Beta Model, the joint distribution between pairs of edges helps illustrate an even richer tale as seen in figure \ref{fig:tree-model-dnfg-joint}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/tree-model-dnfg-joint.pdf}
+	\caption{Joint edge weight distributions between pairs of groundtruth edges in the normalizing flow model for the same training point as \ref{fig:tree-model-beta-marginal}}
+	\label{fig:tree-model-dnfg-joint}
+\end{figure}
+
+For example,
 
 \newpage

@@ -68,7 +68,7 @@ While \cite{bolla_estimating_2017} demonstated a novel technique to train the pa
 The SVI algorithm then optimizes against the $\alpha$ and $\beta$ parameters to match the variational distribution $\hat{y}$ as closely as possible to the full distribution $\phi(v_i, \mathcal{X}, \mathcal{N}_k(v_i, E), \mathcal{W})$. Note that in the case of a graph classification task, the model $\phi$ simply loses its dependence on $v_i$ and we compare against $\phi(\mathcal{X}, E, \mathcal{W})$. They are the exact same formulation. In each epoch of the SVI inference, only one sample is used to get an estimate of the ELBO as is the standard practice \cite{jospin_hands-bayesian_2022}. While this gives a noisy estimate, over time, the value of the ELBO should increase to indicate a better model fit.
 
 \subsection{Normalizing Flow Models}
-In this work, there are two specific normalizing flow models that are tested. In one, the system is trained using SVI to utilize the ELBO as the objective, while in the other a simple KL-divergence is computed and the parameters of the normalizing flow are directly optimized using an appropriate SGD algorithm.
+In this work, normalizing flow models that are tested. A simple KL-divergence is computed and the parameters of the normalizing flow are directly optimized using an appropriate SGD algorithm.
 
 \subsubsection{Spline Autoregressive Normalizing Flows}
 As mentioned in section \S\ref{sec:normalizing-flows}, for a fully universal normalizing flow model, more expressive transformations are required than invertible affine transformations. One such method comes from spline autoregressive normalizing flow layers as described in \cite{dolatabadi_invertible_2020} and implemented in \cite{durkan_neural_2019}. In this work, spline transforms are combined with autoregressive layer transforms.
@@ -121,7 +121,8 @@ For the graph edge interpretation model, this is the most general Bayesian algor
 	\begin{algorithmic}
 		\Require $v_i \in V, \bar{\alpha} > 0, \bar{\beta} > 0$
 		\Require $c \sim \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), \mathcal{W})$
-		\State $b \sim B$
+		\State $\mathcal{B} \gets Beta(\bar{\alpha}, \bar{\beta})$
+		\State $b \sim \mathcal{B}$
 		\State $W_i \gets \sigma(\mathcal{L}_{\mathcal{B}, \Theta}(b))$
 		\State $\hat{y} \gets \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), W_i)$
 		\State $\hat{c} \sim \hat{y}$
@@ -129,8 +130,6 @@ For the graph edge interpretation model, this is the most general Bayesian algor
 \end{algorithm}
 
 \subsubsection{KL-Divergence and Direct Optimization}
-The first method used to train the parameters $\Theta$ is taking the disrtibution $\hat{c}$ and $c$ and backpropogating against the KL-divergence of these two distributions. Because of the reparametrization trick and the fact that the GNN is fully differentiable, this gives the gradient of the KL-divergence against $\Theta$ and allows for direct optimization against these parameters. Any SGD algorithm can be used, and, in particular, the ADAM optimizer \cite{kingma_adam_2017} is used in this model.
+The method used to train the parameters $\Theta$ is taking the disrtibution $\hat{c}$ and $c$ and backpropogating against the KL-divergence of these two distributions. Because of the reparametrization trick and the fact that the GNN is fully differentiable, this gives the gradient of the KL-divergence against $\Theta$ and allows for direct optimization against these parameters. Any SGD algorithm can be used, and, in particular, the ADAM optimizer \cite{kingma_adam_2017} is used in this model.
 
-\subsubsection{ELBO and SVI}
-The second method is to use the ELBO and SVI method that was discussed before. Because the distributions in this model have already been reparametrized, there is no real major difference other than the stability of the training process. As such, this method is included for completeness even though, it is expected, that these two methods have the same theoretical outcome.
 \newpage

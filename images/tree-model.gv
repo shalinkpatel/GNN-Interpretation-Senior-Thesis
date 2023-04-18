@@ -1,4 +1,5 @@
 digraph G {
+	nodesep=2;
 	a [label = "1"];
 	b [label = "2"];
 	c [label = "3"];
@@ -8,8 +9,10 @@ digraph G {
 	g [label = "7"];
 	a -> b [weight=0.5, label = "p/2", labelfloat=true];
 	a -> e [weight=0.5, label = "p/2", labelfloat=true];
+	b -> a [weight=1, label = "p", labelfloat=true];
+	e -> a [weight=1, label = "p", labelfloat=true];
 	c -> b [weight=1, label = "p", labelfloat=true];
 	d -> b [weight=1, label = "p", labelfloat=true];
 	f -> e [weight=1, label = "p", labelfloat=true];
-	g -> e [weight=1, label = "p", labelfloat=true];
+	g -> f [weight=1, label = "p", labelfloat=true];
 }
