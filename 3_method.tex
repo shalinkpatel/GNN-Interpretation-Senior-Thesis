@@ -130,6 +130,6 @@ For the graph edge interpretation model, this is the most general Bayesian algor
 \end{algorithm}
 
 \subsubsection{KL-Divergence and Direct Optimization}
-The method used to train the parameters $\Theta$ is taking the disrtibution $\hat{c}$ and $c$ and backpropogating against the KL-divergence of these two distributions. Because of the reparametrization trick and the fact that the GNN is fully differentiable, this gives the gradient of the KL-divergence against $\Theta$ and allows for direct optimization against these parameters. Any SGD algorithm can be used, and, in particular, the ADAM optimizer \cite{kingma_adam_2017} is used in this model.
+The method used to train the parameters $\Theta$ is taking the disrtibution $\hat{c}$ and $c$ and backpropogating against the KL-divergence of these two distributions. Because of the reparametrization trick and the fact that the GNN is fully differentiable, this gives the gradient of the KL-divergence against $\Theta$ and allows for direct optimization against these parameters. Any SGD algorithm can be used, and, in particular, the ADAM optimizer \cite{kingma_adam_2017} is used in this model. Additionally, an L1 regularization is applied to the edge mask to enforce sparsity on the model. This ensures that the model does not converge on the full graph as its output and is forced to learn the truly important edges. 
 
 \newpage
