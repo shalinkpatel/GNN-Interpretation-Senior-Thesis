@@ -22,29 +22,29 @@ In particular, the Beta Model performs the best with the Normalizing Flow Model 
 The probablistic approach to both the Beta Model and Normalizing Flow Model means that they are better suited for filtering noise as compared to GNNExplainer which experiences little penalty for picking up a noisy edge as it tends to have little effect on the performance of the GNN. Instead, GNNExplainer cares much more about finding the postive edges and has little incentive for dropping noisy edges as demonstrated in the GNN performance from figure \ref{fig:tree-model-sparsity} where the noisy edges added little value but did not decrease the performance of the model. In the probabilistic models, though, these edges add little value and are discarded due to their minimal effect on the model which is discovered when the edge is both sampled and not sampled. 
 
 \subsection{Graph Embedding Experiment Results}
-With a known and confirmed groundtruth in this experiment, the interpretation methods were run through a few different metrics: accuracy, precision, recall, f1 score, and AUROC. In this case, the interpretation methods were compared directly against the groundtruth and the results were averaged across nodes to get the final results as seen in table \ref{tab:graph-embed-result}.
+With a known and confirmed groundtruth in this experiment, the interpretation methods were run through a few different metrics: accuracy, precision, recall, f1 score, and AUROC. In this case, the interpretation methods were compared directly against the groundtruth and the results were averaged across nodes to get the final results as seen in table \ref{tab:graph-embed-result}. Additionally, the average of all explanation masks was taken in order to account for model variance and to get a sense of what a global interpretation score against the ground truth would give.
 \begin{table}[htb]
 	\centering
 	\begin{tabular}{|c|c||ccccc|}\hline
 	Model & Aggregation & Accuracy & Recall & Precision & F1 Score & AUROC \\ \hline\hline
-	GNNExplainer & Avg Metrics & & & & & \\
-	Beta Explainer & Avg Metrics & & & & & \\
-	NF Explainer & Avg Metrics & 0.625 & 0.453 & 0.391 & 0.398 & 0.608 \\ \hline
-	GNNExplainer & Avg Mask & & & & &\\
-	Beta Explainer & Avg Mask & & & & &\\
-	NF Explainer & Avg Mask & 0.667 & 0.333 & 0.400 & 0.364 & 0.672 \\ \hline
+	GNNExplainer & Avg Metrics & 0.612 & 0.599 & 0.386 & 0.468 & 0.601 \\
+	Beta Explainer & Avg Metrics & \textbf{0.634} & 0.505 & \textbf{0.387} & 0.423 & \textbf{0.658} \\
+	NF Explainer & Avg Metrics & 0.588 & \textbf{0.664} & 0.376 & \textbf{0.479} & 0.631 \\ \hline
+	GNNExplainer & Avg Mask & 0.619 & 0.583 & 0.389 & 0.467 & 0.646 \\
+	Beta Explainer & Avg Mask & \textbf{0.637} & 0.583 & \textbf{0.408} & 0.480 & \textbf{0.680} \\
+	NF Explainer & Avg Mask & 0.595 & \textbf{0.667} & 0.381 & \textbf{0.485} & 0.669 \\ \hline
 	\end{tabular} 
 	\caption{A summary of results from the graph embedding experiment}
 	\label{tab:graph-embed-result}
 \end{table}
 
-Based on these results, we can see that 
+Based on these results, we can see that the Bayesian Inference interpretation methods are out-performing the current state-of-the-art in GNNExplainer. While the difference is not massive, these models perform better on all metrics and provide additional qualitative interpretation through the edge mask distributions that they generate. Specifically between the Beta Explainer and NF Explainer, the Beta Explainer has less recall but better precision which give it a higher accuracy and AUROC score while the better recall gives the NF Explainer a better F1 score. Overall, the NF Explainer has higher variance which leads to its lesser performance on the other metrics but the mean of its distribution tends to capture important edges a bit better than the Beta Explainer.
 
 \subsubsection{Beta Model Edge Mask Distribution}
 Additional, insights can be drawn about the GNN by looking at the distribution of edge mask values that the Beta Model came up with. In figure \ref{fig:tree-model-beta-marginal}, one can see the marginal distributions of edge mask values for each edge in the groundtruth. 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/tree-model-beta-marginal.pdf}
+	\includegraphics[width=0.6\textwidth]{images/tree-model-beta-marginal.pdf}
 	\caption{Marginal edge weight distributions of all groundtruth edges in the beta model for a particular training point}
 	\label{fig:tree-model-beta-marginal}
 \end{figure}
@@ -53,7 +53,7 @@ From these marginal distributions, it is clear that messages coming out and into
 Furthermore, insights can be drawn by looking at the joint distribution between pairs of edges. This can give insight into what edges are correlated, anti-correlated, and how many modes there are to the edge mask distribution. This is important as it gives researchers insights into the different mechanisms that drive performance in the GNN. If the GNN is being used in a physical sciences or biology context, for example, this can help elucidate the various mechanisms that map to physical phenomenom. As seen in figure \ref{fig:tree-model-beta-joint}, the Beta Model helps provide a great first order approximation to these types of pathways.
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/tree-model-beta-joint.pdf}
+	\includegraphics[width=0.6\textwidth]{images/tree-model-beta-joint.pdf}
 	\caption{Joint edge weight distributions between pairs of groundtruth edges in the beta model for a particular training point}
 	\label{fig:tree-model-beta-joint}
 \end{figure}
@@ -64,21 +64,21 @@ Specifically, by looking at the joint distributions of edges, one can tell when 
 A similar analysis can be done for the Normalizing Flow Model. Note that this model is much more flexible than the Beta model which gives it a higher variance but allows it to capture multiple different pathways and local minima that the GNN may experience. This can already be seen in the marginal distributions as seen in figure \ref{fig:tree-model-dnfg-marginal}.
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/tree-model-dnfg-marginal.pdf}
+	\includegraphics[width=0.6\textwidth]{images/tree-model-dnfg-marginal.pdf}
 	\caption{Marginal edge weight distributions for all groundtruth edges in the normalizing flow model for the same training point as \ref{fig:tree-model-beta-marginal}}
 	\label{fig:tree-model-dnfg-marginal}
 \end{figure}
 
-Indeed, 
+Indeed, the same distributional shape as in the Beta Model can be seen, but the Normalizing Flow model learns many more modes in the distribution. Note that this corresponds to the various local minima in the training example which is useful as it indicates that are many different modes through which the GNN passes information around. This helps explain the Normalizing Flow Model's weaker performance compared to the Beta Model. The Beta Model can only pick out the most probable mode due to its relative inflexibility while the Normalizing Flow model picks up all the different peaks and troughs in the objective function giving it a higher variance but, essentially, correct overall distribution.
 
 As with the Beta Model, the joint distribution between pairs of edges helps illustrate an even richer tale as seen in figure \ref{fig:tree-model-dnfg-joint}.
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/tree-model-dnfg-joint.pdf}
+	\includegraphics[width=0.6\textwidth]{images/tree-model-dnfg-joint.pdf}
 	\caption{Joint edge weight distributions between pairs of groundtruth edges in the normalizing flow model for the same training point as \ref{fig:tree-model-beta-marginal}}
 	\label{fig:tree-model-dnfg-joint}
 \end{figure}
 
-For example,
+For example, we can now detect edge indepedence with edges $6 \rightarrow 5$ and $1 \rightarrow 2$ having little correlation with each other. If one were to condition on the modes of one of the edges, the conditional distribution could then indicate conditional pathways which clearly exist based on the multi-peaked joint distributions. While an example like this may not merit such analysis, in more complex datasets with graphs mapping to physical phenomenom, this could be of supreme importance and indicate all sorts of useful information.
 
 \newpage

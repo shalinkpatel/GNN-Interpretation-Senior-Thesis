@@ -1,14 +1,24 @@
 \section{Discussion}
 
 \subsection{Comparison of Models}
+Overall, there a few takeaways in comparing the models. The first is that both of the Bayesian models for GNN interpretability perform better than GNNExplainer and represents and increase in the performance of GNN Interpretation methods. While the increase in performance is not too much higher than what GNNExplainer achieves, in a more complicated dataset the difference may be higher.
+
+These Bayesian models not only offer better performance than GNNExplainer, but they also give a deeply introspectable look at the edge interpretations and allow for a detailed analysis of the influnce that the computational graph has on the GNNs performance. The Beta model serves as a low variance estimate for the first mode in the edge mask distribution and is very useful for understanding the high-level pathways of information flow in a GNN. The Normalizing Flow model, though, captures more modalities in the edge mask posterior and is able to give even further details about the GNN. This comes at the expense, though, of a higher variance estimate and more uncertainty in its predictions. 
+
+Together, though, these two models can be very helpful for extracting real-world value out of GNNs. When the computational graph maps to a physical phenomenom, the interpretations from these methods can deliver useful insights that the GNN has learned. GNNExplainer struggles to provide such value and, certainly, cannot capture all the different modalities that the normalizing flow explainer is able to pick up on.
+
+That being said, these models are a lot more computationally expensive with GNNExplainer operating at 10x speed advantage compared to the Bayesian models. While this is quite slow, in reality, one rarely needs to perform analysis on every node on a graph and usually researchers pick notable examples for analysis \cite{bigness_integrating_2021}. Still, this is a significant speed advantage that GNNExplainer holds. 
 
 \subsection{Future Work}
-\subsubsection{Collation of Examples in Graph Classification Datasets}
+Listed below is a inexhaustive list of various ways in which this research can be taken further. 
+
+\subsubsection{Collation of Examples in Classification Datasets}
+One avenue of future work is to combine the ideas of PGExplainer \cite{luo_parameterized_2020} with the Bayesian inference models. Specifically, PGExplainer learns a parametrized network to generate node-level explanations that were trained across all nodes. In this sense, PGExplainer learns more general patterns in the GNN. While learning at each individual neighborhood of each node independently should converge on the same generic truth, leveraging an entire dataset in graph classification or node classification could greatly shorten the amortized inference time that is needed for this model. Especially in the graph embedding experiment, many explanations were similar and creating a parametrized version of the Bayesian inference models could help achieve lower variance estimates at a lower runtime cost.
 
 \subsubsection{Beta Model Conditional Parameter Selection}
-
-\subsubsection{Explicit Graph Structure Modeling in Autoregressive Flows}
+The Beta Model is quite restrictive in the set of posteriors that it can learn due to the fixed alpha and beta parameters at each node. While this allows it to achieve low variance estimates for the most important pathways in the GNN, it precludes it from learning the multi-modal distribution that the Normalizing Flow model manages to. Because of this, it may be useful to put a flexible distribution over the alpha and beta values at each node which is conditional on the edge that is being sampled. In this way, the Beta Model could become more flexible while retaining a lot of the nice qualities that it has. 
 
 \subsubsection{Real-World Datasets (SERGIO and Beyond)}
+Finally, it would be great to apply these methods to a real-world dataset in order to demonstrate the ability of the full posterior edge mask distribution to capture important information in real-world context. A great usecase comes from computational biology and identifying gene-regulatory networks. In gene-regulatory networks, there are multiple different pathways that all interact in order to regulate gene expression. In a case like this, it would interesting to see what a GNN interpretation framework like the Normalizing Flow model and Beta model would be able to say about these networks. One place to find such a dataset is the SERGIO \cite{dibaeinia_sergio_2020} method that was discussed in \S\ref{sec:sergio}. While a synthetic dataset, it provides this exact type of causal playground upon which interpretation methods can be tested to determine their usefulness as a research tool in biological sciences and beyond.
 
 \newpage
