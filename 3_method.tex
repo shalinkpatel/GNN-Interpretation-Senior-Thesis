@@ -1,5 +1,5 @@
 \section{Methods}
-In this paper, three different probablistic formulations exist for the underlying edge importance model. All three of these models rely upon the excellent \verb|Pyro| \cite{bingham_pyro_2018} framework for implementation and inference. Additionally, all GNN models are trained through the \verb|pytorch_geometric| \cite{fey_fast_2019} and \verb|pytorch| \cite{paszke_pytorch_2019} frameworks.
+In this paper, two different probabilistic formulations exist for the underlying edge importance model. All of these models rely upon the excellent \verb|Pyro| \cite{bingham_pyro_2018} framework for implementation and inference. Additionally, all GNN models are trained through the \verb|pytorch_geometric| \cite{fey_fast_2019} and \verb|pytorch| \cite{paszke_pytorch_2019} frameworks.
 
 \subsection{Beta Model}
 The first method used in this paper is a prior in which all Beta distributions are considered independent of each other. Specifically, we assume that $\mathcal{E}_i = E$ and that
@@ -15,7 +15,7 @@ with $Beta(\alpha_{j,k}, \beta_{j, k})$ representing the prior Beta distribution
 	\mathcal{P}(Beta(\alpha, \beta) = x) &= \frac{x^{\alpha - 1}(1-x)^{\beta - 1}}{\Beta(\alpha, \beta)} \\
 	\Beta(\alpha, \beta) &= \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}
 \end{align*}
-where $\Gamma$ is the canoncical Gamma function \cite{noauthor_continuous_nodate}. Given this, the goal of the interpretation task is to learn a variational family $q_{\phi}(H)$ that most closely resembles the posterior distribution when the categorical distribution
+where $\Gamma$ is the canonical Gamma function \cite{noauthor_continuous_nodate}. Given this, the goal of the interpretation task is to learn a variational family $q_{\phi}(H)$ that most closely resembles the posterior distribution when the categorical distribution
 \begin{align*}
 	\phi(v_i, \mathcal{X}, E, \mathcal{W}_i)
 \end{align*}
@@ -36,7 +36,7 @@ which has an easily derived closed form.
 	\caption{An example of a Beta posterior that shows information flowing from $v_1$ to $v_3$.}
 	\label{fig:beta-ex}
 \end{figure}
-There is a wide array of literature on the use of Exponential-families for the modeling of edge weight priors. In particular, the work of Bolla \cite{bolla_estimating_2017} is important. In this work, edge weights are modeled by conditionally independent Beta distributions. The parameters of these Beta distributions are updated via a closed-form solution but it serves as a good model for prediction propogation of information or material from one node to another and converging on a steady-state for the propogation. In the case of GNNs, one can imagine the \verb|MSG| operation as the sending of information. The dense layers in the \verb|Upd| step, then, learn the weight to assign to each incoming and outgoing message. In this vein, the Beta model can approximate this "attention" that is paid in the \verb|Upd| step. Hence, the goal of this model is to serve as an approximiation of this process and encode the steady-state flow of information in the model.
+There is a wide array of literature on the use of Exponential-families for the modeling of edge weight priors. In particular, the work of Bolla \cite{bolla_estimating_2017} is important. In this work, edge weights are modeled by conditionally independent Beta distributions. The parameters of these Beta distributions are updated via a closed-form solution but it serves as a good model for prediction propagation of information or material from one node to another and converging on a steady-state for the propagation. In the case of GNNs, one can imagine the \verb|MSG| operation as the sending of information. The dense layers in the \verb|Upd| step, then, learn the weight to assign to each incoming and outgoing message. In this vein, the Beta model can approximate this "attention" that is paid in the \verb|Upd| step. Hence, the goal of this model is to serve as an approximation of this process and encode the steady-state flow of information in the model.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\textwidth]{images/beta_post.pdf}
@@ -44,12 +44,12 @@ There is a wide array of literature on the use of Exponential-families for the m
 	\label{fig:beta-ex-post}
 \end{figure}
 
-In this model, the $\alpha$ values serve to desribe the affinity for information to flow out of a node while the $\beta$ values tend to describe the affinity for information to flow into the node. Together, they describe the steady state flow of information and perfectly describe many networks in which pathways of information lead to end-goal expression. Indeed, since GNNs tend to embed this type of information flow in a deep-learning setting, it serves to reason that such a prior would be a good encapsulation of the process of information flow, especially at steady state. A typical example of this is gene expression in biology \cite{petralia_new_2016} where paths of edges represent regulatory pathways directly. 
+In this model, the $\alpha$ values serve to describe the affinity for information to flow out of a node while the $\beta$ values tend to describe the affinity for information to flow into the node. Together, they describe the steady state flow of information and perfectly describe many networks in which pathways of information lead to end-goal expression. Indeed, since GNNs tend to embed this type of information flow in a deep-learning setting, it serves to reason that such a prior would be a good encapsulation of the process of information flow, especially at steady state. A typical example of this is gene expression in biology \cite{petralia_new_2016} where paths of edges represent regulatory pathways directly. 
 
 An example of this flow can be seen in figure \ref{fig:beta-ex}. In this figure, we consider a hypothetical posterior for this model and demonstrate how it describes the flow of information from node $v_1$ to $v_3$ via these $\alpha$ and $\beta$ parameters. Additionally, in figure \ref{fig:beta-ex-post}, one can see the posterior distribution of each edge. Notably, there is no conditional independence in this model as changing the parameter on one node changes all adjoining edges.
 
 \subsubsection{Training the Beta Model}
-While \cite{bolla_estimating_2017} demonstated a novel technique to train the parameters to get the true posterior in the limit, this paper will use a standard SVI setup to train the posterior. In the \verb|Pyro| framework, all SVI runs need two things: the forward model and the variational guide. In listing \ref{alg:beta-model}, both the model is shown and the guide follows a very similar setup since it has the same esxact structure. Note that in both cases the mask is sampled from a beta distribution as defined above. Most GNNs have an effective computational graph size as denoted by the number of layers that are in the model. This effective computational graph is generally, the $l$-hop neighborhood around $v_i$ so we only consider interpretation on $\mathcal{N}_l(v_i, E)$ as the other nodes cannot have any influence. Analogously, let all the nodes in this $l$-hop neighborhood be $V_{i,l}$.
+While \cite{bolla_estimating_2017} demonstrated a novel technique to train the parameters to get the true posterior in the limit, this paper will use a standard SVI setup to train the posterior. In the \verb|Pyro| framework, all SVI runs need two things: the forward model and the variational guide. In listing \ref{alg:beta-model}, both the model is shown and the guide follows a very similar setup since it has the same exact structure. Note that in both cases the mask is sampled from a beta distribution as defined above. Most GNNs have an effective computational graph size as denoted by the number of layers that are in the model. This effective computational graph is generally, the $l$-hop neighborhood around $v_i$ so we only consider interpretation on $\mathcal{N}_l(v_i, E)$ as the other nodes cannot have any influence. Analogously, let all the nodes in this $l$-hop neighborhood be $V_{i,l}$.
 \begin{algorithm}[h]
 	\centering
 	\caption{The model setup for the Beta model}
@@ -113,7 +113,7 @@ In general, the normalizing flow will will operate as follows:
 	\end{align*}
 	which is obtained simply by averaging Monte-Carlo sampling of the LRS layers.
 \end{enumerate}
-For the graph edge interpretation model, this is the most general Bayesian algorithm that can be given due to the universality of the LRS coupling normalizing flow. Since the graph interpretation is expected to be quite a complicated distribution, the goal of this method is to capture all of the higher order complexities, including multi-hop relationships. The listing \ref{alg:nf-model} succintly captures this algorithm.
+For the graph edge interpretation model, this is the most general Bayesian algorithm that can be given due to the universality of the LRS coupling normalizing flow. Since the graph interpretation is expected to be quite a complicated distribution, the goal of this method is to capture all of the higher order complexities, including multi-hop relationships. The listing \ref{alg:nf-model} succinctly captures this algorithm.
 \begin{algorithm}[h]
 	\centering
 	\caption{The model setup for the Normalizing Flow model}
@@ -130,6 +130,6 @@ For the graph edge interpretation model, this is the most general Bayesian algor
 \end{algorithm}
 
 \subsubsection{KL-Divergence and Direct Optimization}
-The method used to train the parameters $\Theta$ is taking the disrtibution $\hat{c}$ and $c$ and backpropogating against the KL-divergence of these two distributions. Because of the reparametrization trick and the fact that the GNN is fully differentiable, this gives the gradient of the KL-divergence against $\Theta$ and allows for direct optimization against these parameters. Any SGD algorithm can be used, and, in particular, the ADAM optimizer \cite{kingma_adam_2017} is used in this model. Additionally, an L1 regularization is applied to the edge mask to enforce sparsity on the model. This ensures that the model does not converge on the full graph as its output and is forced to learn the truly important edges. 
+The method used to train the parameters $\Theta$ is taking the distribution $\hat{c}$ and $c$ and backpropogating against the KL-divergence of these two distributions. Because of the reparametrization trick and the fact that the GNN is fully differentiable, this gives the gradient of the KL-divergence against $\Theta$ and allows for direct optimization against these parameters. Any SGD algorithm can be used, and, in particular, the ADAM optimizer \cite{kingma_adam_2017} is used in this model. Additionally, an L1 regularization is applied to the edge mask to enforce sparsity on the model. This ensures that the model does not converge on the full graph as its output and is forced to learn the truly important edges. 
 
 \newpage
