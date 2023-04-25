@@ -50,7 +50,7 @@ For adding the noise, inspiration is taken from \cite{dibaeinia_sergio_2020} and
 		\State $\bar{E} \gets []$
 		\For{$v \in V$}
 			\State $n \sim Possion(\lambda)$
-			\State $e \sim Categorical_n\left(\frac{1}{\sum_{v_i \in \mathcal{N}_{\rho}(v, E)}d(v, v_i)}[d(v, v_i) \mid \forall v_i \in \mathcal{N}_{\rho}(v, E)] \wedge d(v, v_i) \neq 1 \right)$
+			\State $e \sim Categorical_n\left(\frac{1}{\sum_{v_i \in \mathcal{N}_{\rho}(v, E)}d(v, v_i)}[d(v, v_i) \mid \forall v_i \in \mathcal{N}_{\rho}(v, E) \wedge d(v, v_i) \neq 1] \right)$
 			\State $\bar{E} \gets \bar{E} \cup e$
 		\EndFor
 		\State $E \gets E \cup \bar{E}$
