@@ -5,7 +5,7 @@ When it comes to GNN interpretability, there are a few main methods. The first t
 In addition to these works, the work of SERGIO \cite{dibaeinia_sergio_2020} will be introduced as it will be utilized later on to generate a new class of experiments that GNN Interpretability methods can be benchmarked against. This work provides causal graph structures that give a guaranteed groundtruth for interpretation.
 
 \subsection{GNN Explainer}
-The full version of GNNExplainer attempts to learn both a node interpretation and edge interpretation. For this work, only the edge interpretation part of the framework was utilized. GNN Explainer attempts to solve the objective outlined in \S\ref{sec:intro-interp}, by only trying to learn $\mathcal{W}_i$ while treating $\mathcal{E}_i = E$. In this framework, GNN Explainer enforces that for any $e \in E$, $W(e) \geq \mathcal{W}_i(e)$. Then to get the argmax, GNNExplainer treats $\mathcal{W}_i$ as a random variable. Then the goal get transformed to 
+The full version of GNNExplainer attempts to learn both a node interpretation and edge interpretation. For this work, only the edge interpretation part of the framework was utilized. GNN Explainer attempts to solve the objective outlined in \S\ref{sec:intro-interp}, by only trying to learn $\mathcal{W}_i$ while treating $\mathcal{E}_i = E$. In this framework, GNN Explainer enforces that for any $e \in E$, $W(e) \geq \mathcal{W}_i(e)$. Then to get the argmax, GNNExplainer treats $\mathcal{W}_i$ as a random variable. The goal gets transformed to 
 \begin{align*}
 	\argmin_{\mathcal{W}_i} \mathbb{E}_{w \sim \mathcal{W}_i} [H(\phi(v_i, \mathcal{X}, E, w))]
 \end{align*}
