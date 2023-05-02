@@ -10,7 +10,7 @@ with
 \begin{align*}
 	\mathcal{W}_i(v_j, v_k) = \mathbb{E}[Beta(\alpha_{j}, \beta_{k})]
 \end{align*}
-with $Beta(\alpha_{j,k}, \beta_{j, k})$ representing the prior Beta distribution on edge $(v_j, v_k)$ with specific parameters $\alpha_{j,k}$ and $\beta_{j,k}$. Note, we define the Beta distribution as
+with $Beta(\alpha_{j}, \beta_{k})$ representing the prior Beta distribution on edge $(v_j, v_k)$ with specific parameters $\alpha_{j}$ and $\beta_{k}$. Note, we define the Beta distribution as
 \begin{align*}
 	\mathcal{P}(Beta(\alpha, \beta) = x) &= \frac{x^{\alpha - 1}(1-x)^{\beta - 1}}{\Beta(\alpha, \beta)} \\
 	\Beta(\alpha, \beta) &= \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}
@@ -23,7 +23,7 @@ is conditioned on the full model
 \begin{align*}
 	\phi(v_i, \mathcal{X}, E, \mathcal{W})
 \end{align*}
-where $\mathcal{W}(e) = 1$ for all $e \in E$. For the sake of this experiment, the posterior distribution is also assumed to be a set of Beta distributions but fully conditional on each other. The goal, then is to learn posterior values $\hat{\alpha}_{j,k}$ and $\hat{\beta}_{j,k}$. Given these values, the final explanation is
+where $\mathcal{W}(e) = 1$ for all $e \in E$. For the sake of this experiment, the posterior distribution is also assumed to be a set of Beta distributions but fully conditional on each other. The goal, then is to learn posterior values $\hat{\alpha}_{j}$ and $\hat{\beta}_{k}$. Given these values, the final explanation is
 \begin{align*}
 	\mathcal{W}_i(v_j, v_k) = \mathbb{E}[Beta(\hat{\alpha}_{j}, \hat{\beta}_{k})]
 \end{align*}
@@ -120,7 +120,7 @@ For the graph edge interpretation model, this is the most general Bayesian algor
 	\label{alg:nf-model}
 	\begin{algorithmic}
 		\Require $v_i \in V, \bar{\alpha} > 0, \bar{\beta} > 0$
-		\Require $c \sim \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), \mathcal{W})$
+		\Require $c \sim \phi(v_i, \mathcal{X}, \mathcal{N}_l(v_i, E), W)$
 		\State $\mathcal{B} \gets Beta(\bar{\alpha}, \bar{\beta})$
 		\State $b \sim \mathcal{B}$
 		\State $W_i \gets \sigma(\mathcal{L}_{\mathcal{B}, \Theta}(b))$
