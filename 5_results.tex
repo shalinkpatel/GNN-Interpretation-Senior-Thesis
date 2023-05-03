@@ -58,7 +58,14 @@ Furthermore, insights can be drawn by looking at the joint distribution between 
 	\label{fig:tree-model-beta-joint}
 \end{figure}
 
-Specifically, by looking at the joint distributions of edges, one can tell when a certain pair of edges is positively correlated, negatively correlated or lacks any correlation at all. In figure \ref{fig:tree-model-beta-joint}, looking at edges $3 \rightarrow 2$ and $1 \rightarrow 5$ demonstrates that for this example, the model is certain that edge $1 \rightarrow 5$ is important while the edge $3 \rightarrow 2$ is not. Perhaps this is due to an accumulation of density in node 5 while there was not as much sampled at node 2. Indeed, this can be corroborated by looking at $6 \rightarrow 5$ and $1 \rightarrow 5$ where both are very positively correlated and indicates that information is pooling at this node for this particular example. Finally, it is clear that bidirectional flows from node 1 and its neighbors are highly important as well. Overall, this gives a great unimodal intuition about the way in which information flows through the model.
+Specifically, by looking at the joint distributions of edges, one can tell when a certain pair of edges is positively correlated, negatively correlated or lacks any correlation at all. 
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/tree-model-beta-cor.pdf}
+	\caption{Pairwise correlations between pairs of groundtruth edges in the beta model for and example datapoint}
+	\label{fig:tree-model-beta-cor}
+\end{figure}
+What can be seen in figure \ref{fig:tree-model-beta-cor} is that there is no such pairwise correlation between edges. This indicates that this GNN does not require pathways of information to move information. Rather, it just requires a certain level of messaging in the groundtruths in order to achieve good prediction accuracy. While we did not find any pathways in this GNN / dataset, this is a type of analysis that cannot be conducted with current explanation methods and represents a deeper understanding of the underlying GNN.
 
 \subsubsection{Normalizing Flow Model Edge Mask Distribution}
 A similar analysis can be done for the Normalizing Flow Model. Note that this model is much more flexible than the Beta model which gives it a higher variance but allows it to capture multiple different pathways and local minima that the GNN may experience. This can already be seen in the marginal distributions as seen in figure \ref{fig:tree-model-dnfg-marginal}.
@@ -71,7 +78,8 @@ A similar analysis can be done for the Normalizing Flow Model. Note that this mo
 
 Indeed, the same distributional shape as in the Beta Model can be seen, but the Normalizing Flow model learns many more modes in the distribution. Note that this corresponds to the various local minima in the training example which is useful as it indicates that are many different modes through which the GNN passes information around. This helps explain the Normalizing Flow Model's weaker performance compared to the Beta Model. The Beta Model can only pick out the most probable mode due to its relative inflexibility while the Normalizing Flow model picks up all the different peaks and troughs in the objective function giving it a higher variance but, essentially, correct overall distribution.
 
-As with the Beta Model, the joint distribution between pairs of edges helps illustrate an even richer tale as seen in figure \ref{fig:tree-model-dnfg-joint}.
+As with the Beta Model, the joint distribution between pairs of edges can help illustrate a rich tale as seen in figure \ref{fig:tree-model-dnfg-joint}. We conducted a similar correlation analysis \ref{fig:tree-model-dnfg-cor} between the distributions of the edge weights of the groundtruth graph and saw the same thing. Namely, there is no correlation between distributions which corresponds to the same analysis given for the Beta Model.
+
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.6\textwidth]{images/tree-model-dnfg-joint.pdf}
@@ -79,6 +87,11 @@ As with the Beta Model, the joint distribution between pairs of edges helps illu
 	\label{fig:tree-model-dnfg-joint}
 \end{figure}
 
-For example, we can now detect edge independence with edges $6 \rightarrow 5$ and $1 \rightarrow 2$ having little correlation with each other. If one were to condition on the modes of one of the edges, the conditional distribution could then indicate conditional pathways which clearly exist based on the multi-peaked joint distributions. While an example like this may not merit such analysis, in more complex datasets with graphs mapping to physical phenomenon, this could be of supreme importance and indicate all sorts of useful information.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/tree-model-dnfg-cor.pdf}
+	\caption{Pairwise correlations between pairs of groundtruth edges in the normalizing flow model for and example datapoint}
+	\label{fig:tree-model-dnfg-cor}
+\end{figure}
 
 \newpage
